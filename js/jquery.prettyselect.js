@@ -51,9 +51,7 @@
 			$wrap.append('<ul>' + elements + '</ul>');
 
 			$wrap.on('click', 'li', function() {
-				var val = $(this).data('value');
-
-				$select[0].value = val;
+				$select[0].value = $(this).data('value');
 				privates.fire($select[0], 'change');
 			});
 
@@ -67,7 +65,6 @@
 					.removeClass(options.optionSelectedClass)
 					.filter('[data-value="' + val + '"]')
 					.addClass(options.optionSelectedClass);
-
 
 			});
 		},
