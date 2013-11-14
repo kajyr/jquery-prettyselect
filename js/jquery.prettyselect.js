@@ -26,6 +26,27 @@
 			});
 
 			return elements;
+		},
+		mutationObserver: function($element, callBack) {
+			if (!window.MutationObserver) {
+
+				setInterval($.proxy(function() {
+					var html = this.element.html();
+					var oldHtml = this.element.data('mo-html');
+					if (html !== oldHtml) {
+						this.element.data('mo-html', html);
+						callBack();
+					}
+				}, {
+					element: $element,
+					callBack: callBack
+				}), 200);
+
+			} else {
+				var MutationObserver = window.MutationObserver;
+				var observer = new MutationObserver(callBack);
+				observer.observe($element[0], { subtree: true, attributes: true, childList: true });
+			}
 		}
 	};
 
@@ -72,16 +93,12 @@
 
 			});
 
-			var MutationObserver = window.MutationObserver;
-
-			var observer = new MutationObserver($.proxy(function(mutations, observer) {
+			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
 				var $wrap = this.parents('.' + options.wrapClass);
 				$wrap.find('ul').html(privates.populate(this));
-
 			}, $select));
 
-			observer.observe($select[0], { subtree: true, attributes: true, 	childList: true });
-
+		
 		},
 
 		functionName : function( ) {	
