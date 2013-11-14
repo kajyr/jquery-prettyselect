@@ -7,8 +7,8 @@ The select element is still present and hidden ( and works as the Model for the 
 
 ## Usage:
 ```javascript
-$('#base select.topretty').prettyselect();
+$('select').prettyselect();
 ```
 
 ## Updates:
-- Automatically detects change in the native select options (and rebuild the DOM) (In newest browsers)
+- Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill

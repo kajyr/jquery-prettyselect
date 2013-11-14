@@ -24,7 +24,6 @@
 				var $option = $(this);
 				elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
 			});
-
 			return elements;
 		},
 		mutationObserver: function($element, callBack) {
@@ -60,15 +59,14 @@
 
 			var $select = $this;
 
-			$select.css('display', 'none');
-
-			$select.wrap('<div class="'+options.wrapClass+'"/>');
+			$select
+				.css('display', 'none')
+				.wrap('<div class="'+options.wrapClass+'"/>');
 
 			var $wrap = $select.parents('.' + options.wrapClass);
 
 			var label = $select.find('option:selected').html();
-			$label = $('<div class="'+options.labelClass+'"/>');
-			$label.html(label);
+			$label = $('<div class="'+options.labelClass+'"/>').html(label);
 
 			$wrap.append($label);
 
@@ -99,11 +97,6 @@
 			}, $select));
 
 		
-		},
-
-		functionName : function( ) {	
-			//...
-			return 1;
 		}
 	};
 
