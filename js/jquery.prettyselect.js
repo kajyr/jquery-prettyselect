@@ -17,6 +17,15 @@
 			else {
 				element.fireEvent("on"+event);
 			}
+		},
+		populate: function($select) {
+			var elements = '';
+			$select.find('option').each(function() {
+				var $option = $(this);
+				elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
+			});
+
+			return elements;
 		}
 	};
 
@@ -42,12 +51,7 @@
 
 			$wrap.append($label);
 
-			var elements = '';
-			$select.find('option').each(function() {
-				var $option = $(this);
-				elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
-			});
-
+			var elements = privates.populate($select);
 			$wrap.append('<ul>' + elements + '</ul>');
 
 			$wrap.on('click', 'li', function() {
@@ -67,6 +71,17 @@
 					.addClass(options.optionSelectedClass);
 
 			});
+
+			var MutationObserver = window.MutationObserver;
+
+			var observer = new MutationObserver($.proxy(function(mutations, observer) {
+				var $wrap = this.parents('.' + options.wrapClass);
+				$wrap.find('ul').html(privates.populate(this));
+
+			}, $select));
+
+			observer.observe($select[0], { subtree: true, attributes: true, 	childList: true });
+
 		},
 
 		functionName : function( ) {	
