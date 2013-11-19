@@ -29,7 +29,7 @@
 		mutationObserver: function($element, callBack) {
 			if (!window.MutationObserver) {
 
-				setInterval($.proxy(function() {
+				var interval = setInterval($.proxy(function() {
 					var html = this.element.html();
 					var oldHtml = this.element.data('mo-html');
 					if (html !== oldHtml) {
@@ -40,11 +40,14 @@
 					element: $element,
 					callBack: callBack
 				}), 200);
+				$element.data('mutationObserver', interval);
+
 
 			} else {
 				var MutationObserver = window.MutationObserver;
 				var observer = new MutationObserver(callBack);
 				observer.observe($element[0], { subtree: true, attributes: true, childList: true });
+				$element.data('mutationObserver', observer);
 			}
 		}
 	};
@@ -55,7 +58,7 @@
 	var methods = {
 		// you can use $this and options
 		init : function( param ) {
-			if (typeof options !== 'undefined') { return; }
+			if (typeof options !== 'undefined' && options !== null) { return; }
 			options = $.extend({ initDone: true }, defaults, param);
 
 			var $select = $this;
@@ -107,12 +110,21 @@
 			var $label = $wrap.find('.' + options.labelClass);
 			var $ul = $wrap.find('ul');
 
+			var observer = $select.data('mutationObserver');
+			if (typeof observer === 'object') {
+				observer.disconnect();
+			} else {
+				window.clearInterval(observer);
+			}
+
 			$label.detach();
 			$ul.detach();
 
 			$select
 				.show()
 				.unwrap(options.wrapClass);
+
+			options = null;
 
 		}
 	};
