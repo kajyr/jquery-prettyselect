@@ -61,7 +61,7 @@
 			var $select = $this;
 
 			$select
-				.css('display', 'none')
+				.hide()
 				.wrap('<div class="'+options.wrapClass+'"/>');
 
 			var $wrap = $select.parents('.' + options.wrapClass);
@@ -98,6 +98,22 @@
 			}, $select));
 
 		
+		},
+
+		destroy: function (param) {
+			var $select = $this;
+
+			var $wrap = $select.parents('.' + options.wrapClass);
+			var $label = $wrap.find('.' + options.labelClass);
+			var $ul = $wrap.find('ul');
+
+			$label.detach();
+			$ul.detach();
+
+			$select
+				.show()
+				.unwrap(options.wrapClass);
+
 		}
 	};
 
