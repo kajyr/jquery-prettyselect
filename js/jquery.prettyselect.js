@@ -55,7 +55,8 @@
 	var methods = {
 		// you can use $this and options
 		init : function( param ) {
-			options = $.extend({}, defaults, param);
+			if (typeof options !== 'undefined') { return; }
+			options = $.extend({ initDone: true }, defaults, param);
 
 			var $select = $this;
 
