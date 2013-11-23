@@ -57,3 +57,24 @@ asyncTest("mutations: changing options", function() {
 		start();
 	}, 100);
 });
+
+test("interface: open and close", function() {
+
+	var $select = $('select#basic').prettyselect();
+
+	var $wrap = $select.parents('.prettyselect-wrap');
+	var $drop = $wrap.find('ul');
+
+	$label = $wrap.find('.prettyselect-label');
+
+	ok($drop.is(':hidden'), 'The drop element is initially hidden');
+
+	$label.trigger('click');
+
+	ok($drop.is(':visible', 'After a click the drop element is visible'));
+
+	$('body').trigger('click');
+
+	ok($drop.is(':hidden'), 'After clicking on another element the drop is hidden');
+
+});
