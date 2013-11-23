@@ -75,7 +75,11 @@
 			$wrap.append($label);
 
 			var elements = privates.populate($select);
-			$wrap.append('<ul>' + elements + '</ul>');
+			var $drop = $('<ul>' + elements + '</ul>');
+
+			$drop.hide();
+
+			$wrap.append($drop);
 
 			$wrap.on('click', 'li', function() {
 				$select[0].value = $(this).data('value');
@@ -93,6 +97,14 @@
 					.filter('[data-value="' + val + '"]')
 					.addClass(options.optionSelectedClass);
 
+			});
+
+			$label.on('click', function() {
+				$drop.css('display', 'block');
+				$('html').one('click', function() {
+				//	$drop.hide();
+				console.log('ss')
+					});
 			});
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
