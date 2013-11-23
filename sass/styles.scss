@@ -1,4 +1,31 @@
+body {
+	width: 760px;
+	margin: 0 auto;
+}
+
+
+
+
+
+$width: 200px;
+
 .prettyselect-wrap {
+	width: $width;
+	border: 1px solid black;
+	position: relative;
+	cursor: pointer;
+
+	ul {
+		width: $width;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: white;
+		display:none;
+		padding-left: 2px;
+		padding-top: 10px;
+		list-style: none; 
+	}
 
 	li.selected {
 		color: red;
