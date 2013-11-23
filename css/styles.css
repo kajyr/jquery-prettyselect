@@ -1,1 +1,1 @@
-.prettyselect-wrap li.selected{color:red}
+body{width:760px;margin:0 auto}.prettyselect-wrap{width:200px;border:1px solid black;position:relative;cursor:pointer}.prettyselect-wrap ul{width:200px;position:absolute;top:0;left:0;background:white;display:none;padding-left:2px;padding-top:10px;list-style:none}.prettyselect-wrap li.selected{color:red}
