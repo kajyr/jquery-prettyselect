@@ -5,29 +5,41 @@ body {
 
 
 
-
-
 $width: 200px;
+$height: 30px;
 
 .prettyselect-wrap {
 	width: $width;
-	border: 1px solid black;
 	position: relative;
 	cursor: pointer;
 
-	ul {
-		width: $width;
+	.prettyselect-drop {
+		width: 100%;
 		position: absolute;
-		top: 0;
+		top: $height;
 		left: 0;
 		background: white;
 		display:none;
-		padding-left: 2px;
+		padding-left: 0px;
 		padding-top: 10px;
+		margin: 0px;
 		list-style: none; 
-	}
+		border: 1px solid black;
 
-	li.selected {
-		color: red;
+		li {
+			padding: 2px 5px;
+
+			&:hover {
+				background-color: #eee;
+			}
+		}
 	}
+}
+
+.prettyselect-label {
+	height: $height;
+	line-height: $height;
+	background-color: #0081AB;
+	color: white;
+	padding: 0 5px;
 }

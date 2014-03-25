@@ -3,7 +3,8 @@
 	var defaults = {
 		'pluginName': 'prettyselect',
 		'wrapClass': 'prettyselect-wrap',
-		'labelClass': 'prettyselect-label'
+		'labelClass': 'prettyselect-label',
+		'dropClass': 'prettyselect-drop'
 	};
 
 	var privates = {
@@ -75,7 +76,7 @@
 			$wrap.append($label);
 
 			var elements = privates.populate($select);
-			var $drop = $('<ul>' + elements + '</ul>');
+			var $drop = $('<ul class="' + options.dropClass + '">' + elements + '</ul>');
 
 			$drop.hide();
 
@@ -108,7 +109,7 @@
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
 				console.log(mutations);
 				var $wrap = this.parents('.' + options.wrapClass);
-				$wrap.find('ul').html(privates.populate(this));
+				$wrap.find('.' + options.dropClass).html(privates.populate(this));
 			}, $select));
 
 		
@@ -119,7 +120,7 @@
 
 			var $wrap = $select.parents('.' + options.wrapClass);
 			var $label = $wrap.find('.' + options.labelClass);
-			var $ul = $wrap.find('ul');
+			var $ul = $wrap.find('.' + options.dropClass);
 
 			var observer = $select.data('mutationObserver');
 			if (typeof observer === 'object') {
