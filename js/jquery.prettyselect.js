@@ -99,13 +99,18 @@
 
 			});
 
-			$label.on('click', function() {
-				$drop.css('display', 'block');
-				$('html').one('click', function() {
-					//	$drop.hide();
-					console.log('ss');
-				});
-			});
+			$label.on('click', function(e) {
+				if ($drop.is(':visible')) { return; }
+				e.stopPropagation();
+
+				$drop.show();
+
+				$('html').one('click', function () {
+				
+					$drop.hide();
+
+				});	
+			})
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
 				var $wrap = this.parents('.' + options.wrapClass);
