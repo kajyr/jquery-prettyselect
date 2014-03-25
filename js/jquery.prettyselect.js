@@ -102,9 +102,9 @@
 			$label.on('click', function() {
 				$drop.css('display', 'block');
 				$('html').one('click', function() {
-				//	$drop.hide();
-				console.log('ss')
-					});
+					//	$drop.hide();
+					console.log('ss');
+				});
 			});
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {

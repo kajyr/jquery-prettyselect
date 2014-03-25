@@ -1,0 +1,10 @@
+{
+  "name": "prettySelect",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-copy": "0.5.0",
+    "grunt-cli": "~0.1.13"
+  }
+}
