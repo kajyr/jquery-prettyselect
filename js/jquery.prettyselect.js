@@ -3,8 +3,7 @@
 	var defaults = {
 		'pluginName': 'prettyselect',
 		'wrapClass': 'prettyselect-wrap',
-		'labelClass': 'prettyselect-label',
-		'optionSelectedClass': 'selected'
+		'labelClass': 'prettyselect-label'
 	};
 
 	var privates = {
@@ -20,6 +19,7 @@
 		},
 		populate: function($select) {
 			var elements = '';
+			var val = $select.val();
 			$select.find('option').each(function() {
 				var $option = $(this);
 				elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
@@ -46,7 +46,7 @@
 			} else {
 				var MutationObserver = window.MutationObserver;
 				var observer = new MutationObserver(callBack);
-				observer.observe($element[0], { subtree: true, attributes: true, childList: true });
+				observer.observe($element[0], { subtree: true, attributes: false, childList: true });
 				$element.data('mutationObserver', observer);
 			}
 		}
@@ -70,7 +70,7 @@
 			var $wrap = $select.parents('.' + options.wrapClass);
 
 			var label = $select.find('option:selected').html();
-			$label = $('<div class="'+options.labelClass+'"/>').html(label);
+			var $label = $('<div class="'+options.labelClass+'"/>').html(label);
 
 			$wrap.append($label);
 
@@ -88,15 +88,8 @@
 
 			$select.on('change', function() {
 				var val = $select.val();
-
 				var label = $select.find('option[value = "' + val + '"]').html();
 				$label.html(label);
-
-				$wrap.find('li')
-					.removeClass(options.optionSelectedClass)
-					.filter('[data-value="' + val + '"]')
-					.addClass(options.optionSelectedClass);
-
 			});
 
 			$label.on('click', function(e) {
@@ -113,6 +106,7 @@
 			})
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
+				console.log(mutations);
 				var $wrap = this.parents('.' + options.wrapClass);
 				$wrap.find('ul').html(privates.populate(this));
 			}, $select));
