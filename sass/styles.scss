@@ -1,0 +1,45 @@
+body {
+	width: 760px;
+	margin: 0 auto;
+}
+
+
+
+$width: 200px;
+$height: 30px;
+
+.prettyselect-wrap {
+	width: $width;
+	position: relative;
+	cursor: pointer;
+
+	.prettyselect-drop {
+		width: 100%;
+		position: absolute;
+		top: $height;
+		left: 0;
+		background: white;
+		display:none;
+		padding-left: 0px;
+		padding-top: 10px;
+		margin: 0px;
+		list-style: none; 
+		border: 1px solid black;
+
+		li {
+			padding: 2px 5px;
+
+			&:hover {
+				background-color: #eee;
+			}
+		}
+	}
+}
+
+.prettyselect-label {
+	height: $height;
+	line-height: $height;
+	background-color: #0081AB;
+	color: white;
+	padding: 0 5px;
+}
