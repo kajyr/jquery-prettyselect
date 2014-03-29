@@ -6,14 +6,22 @@ module.exports = function(grunt) {
 		jshint: {
 			files: [
 				'Gruntfile.js',
-				'js/*.js'
+				'src/*.js'
 			]
+		},
+		uglify: {
+			my_target: {
+				files: {
+					'src/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js']
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	// Default task(s).
-	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('default', ['jshint', 'uglify']);
 
 };

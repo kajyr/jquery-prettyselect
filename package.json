@@ -1,10 +1,22 @@
 {
-  "name": "prettySelect",
-  "version": "0.1.0",
+  "name": "jquery-prettyselect",
+  "version": "0.2.0",
+  "author": {
+    "name": "Carlo",
+    "email": "carlo.panzi@gmail.com",
+    "url": "http://kajyr.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kajyr/jquery-prettyselect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kajyr/jquery-prettyselect/issues"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-copy": "0.5.0",
-    "grunt-cli": "~0.1.13"
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-uglify": "^0.4.0"
   }
 }

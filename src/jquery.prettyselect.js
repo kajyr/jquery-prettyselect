@@ -104,7 +104,7 @@
 					$drop.hide();
 
 				});	
-			})
+			});
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
 				console.log(mutations);
