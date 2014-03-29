@@ -1,4 +1,4 @@
-prettyselect
+jquery-prettyselect
 ============
 
 Html replace to make select elements pretty.

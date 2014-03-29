@@ -1,0 +1,19 @@
+{
+    "name": "jquery-prettyselect",
+    "version": "0.2.0",
+    "main": "src/jquery.prettyselect.js",
+    "ignore": [
+        "source",
+        "spec",
+        ".bowerrc",
+        ".gitignore",
+        ".jshintrc",
+        "bower.json",
+        "gruntfile.js",
+        "package.json",
+        "README.md"
+    ],
+    "dependencies": {
+        "jquery": ">=1.8",
+    }
+}
