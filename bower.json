@@ -11,8 +11,10 @@
         "bower.json",
         "gruntfile.js",
         "package.json",
+        "jquery-prettyselect.jquery.json",
         "README.md",
-        "node_modules"
+        "node_modules",
+        "tests"
     ],
     "dependencies": {
         "jquery": ">=1.8"
