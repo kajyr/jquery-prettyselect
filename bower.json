@@ -8,6 +8,7 @@
         ".bowerrc",
         ".gitignore",
         ".jshintrc",
+        ".travis.yml",
         "bower.json",
         "gruntfile.js",
         "package.json",
