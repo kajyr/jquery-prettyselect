@@ -1,13 +1,13 @@
 module.exports = function(grunt) {
-  // Do grunt-related things in here
+	// Do grunt-related things in here
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		jshint: {
 			files: [
-				'Gruntfile.js',
-				'src/*.js',
-				'!src/*.min.js'
+			'Gruntfile.js',
+			'src/*.js',
+			'!src/*.min.js'
 			]
 		},
 		uglify: {
@@ -16,6 +16,9 @@ module.exports = function(grunt) {
 					'src/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js']
 				}
 			}
+		},
+		nodeunit: {
+			all: ['tests/*.nodeunit.js']
 		}
 	});
 
