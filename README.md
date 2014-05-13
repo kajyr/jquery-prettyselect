@@ -1,6 +1,8 @@
 jquery-prettyselect
 ============
 
+[![Build Status](https://travis-ci.org/kajyr/jquery-prettyselect.svg?branch=master)](https://travis-ci.org/kajyr/jquery-prettyselect)
+
 Html replace to make select elements pretty.
 
 The select element is still present and hidden ( and works as the Model for the Html View), hence can be used to bind events or listen changes.
