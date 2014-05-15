@@ -1,4 +1,45 @@
 (function() {
+  var MutationObserver;
+
+  if (window.MutationObserver != null) {
+    return;
+  }
+
+  MutationObserver = (function() {
+    function MutationObserver(callBack) {
+      this.callBack = callBack;
+    }
+
+    MutationObserver.prototype.observe = function(element, options) {
+      this.element = element;
+      return this.interval = setInterval((function(_this) {
+        return function() {
+          var html;
+          html = _this.element.innerHTML;
+          if (_this.oldHtml == null) {
+            _this.oldHtml = html;
+          }
+          if (html !== _this.oldHtml) {
+            _this.oldHtml = html;
+            return _this.callBack.apply(null);
+          }
+        };
+      })(this), 200);
+    };
+
+    MutationObserver.prototype.disconnect = function() {
+      return window.clearInterval(this.interval);
+    };
+
+    return MutationObserver;
+
+  })();
+
+  window.MutationObserver = MutationObserver;
+
+}).call(this);
+
+(function() {
   var __slice = [].slice;
 
   (function($) {
@@ -23,31 +64,15 @@
           return elements;
         },
         mutationObserver: function($element, callBack) {
-          var MutationObserver, interval, observer;
-          if (!window.MutationObserver) {
-            interval = setInterval($.proxy(function() {
-              var html, oldHtml;
-              html = this.element.html();
-              oldHtml = this.element.data('mo-html');
-              if (html !== oldHtml) {
-                this.element.data('mo-html', html);
-                return callBack();
-              }
-            }, {
-              element: $element,
-              callBack: callBack
-            }), 200);
-            return $element.data('mutationObserver', interval);
-          } else {
-            MutationObserver = window.MutationObserver;
-            observer = new MutationObserver(callBack);
-            observer.observe($element[0], {
-              subtree: true,
-              attributes: false,
-              childList: true
-            });
-            return $element.data('mutationObserver', observer);
-          }
+          var MutationObserver, observer;
+          MutationObserver = window.MutationObserver;
+          observer = new MutationObserver(callBack);
+          observer.observe($element[0], {
+            subtree: true,
+            attributes: false,
+            childList: true
+          });
+          return $element.data('mutationObserver', observer);
         }
       };
 

@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 		coffee: {
 			compile: {
 				files: {
-					'src/jquery.prettyselect2.js': 'src/jquery.prettyselect2.coffee', // 1:1 compile
+					'src/jquery.prettyselect2.js': ['src/MutationObserverPolyfill.coffee', 'src/jquery.prettyselect2.coffee']
 				}
 			  },
 		},

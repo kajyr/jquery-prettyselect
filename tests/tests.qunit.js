@@ -62,7 +62,7 @@
 			equal($wrap.find('li[data-value="z"]').length, 1, 'There should be the new element');
 
 			start();
-		}, 100);
+		}, 500);
 	});
 */
 	test("interface: open and close", function() {

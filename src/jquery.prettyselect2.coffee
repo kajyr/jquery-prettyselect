@@ -19,20 +19,6 @@
 				return elements;
 			,
 			mutationObserver: ($element, callBack) ->
-				if (!window.MutationObserver)
-
-					interval = setInterval($.proxy( () -> 
-						html = this.element.html();
-						oldHtml = this.element.data('mo-html');
-						if html != oldHtml
-							this.element.data('mo-html', html);
-							callBack();
-					, {
-						element: $element,
-						callBack: callBack
-					}), 200);
-					$element.data('mutationObserver', interval);
-				else
 					MutationObserver = window.MutationObserver;
 					observer = new MutationObserver(callBack);
 					observer.observe($element[0], { subtree: true, attributes: false, childList: true })
