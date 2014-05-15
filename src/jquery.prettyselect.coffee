@@ -11,10 +11,10 @@
 		privates:
 			populate: ($select) ->
 				elements = '';
-				val = $select.val();
+				val = $select.val()
 				$select.find('option').each( () ->
-					$option = $(this);
-					elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
+					$option = $(this)
+					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
 				);
 				return elements;
  
@@ -38,29 +38,27 @@
 
 			$wrap.append($drop)
 
-			$wrap.on('click', 'li', $.proxy((e) ->
-				$li = $(e.target);
-				$select = this;
-				$select[0].value = $li.data('value')
-				$select.trigger('change')
-			, @$select))
+			$wrap.on('click', 'li', (e) =>
+				@$select
+					.val $(e.target).data('value')
+					.trigger 'change'
+			)
 
-			@$select.on('change', (e) ->
-				$select = $(e.target);
-				val = $select.val();
-				label = $select.find("option[value = #{val}]").html();
+			@$select.on('change', (e) =>
+				val = @$select.val();
+				label = @$select.find("option[value = #{val}]").html();
 				$label.html(label);
 			);
 
 			$label.on('click', (e) -> 
 				return if $drop.is(':visible')
-				e.stopPropagation();
+				e.stopPropagation()
 
-				$drop.show();
+				$drop.show()
 
 				$('html').one('click', () ->
 				
-					$drop.hide();
+					$drop.hide()
 
 				);	
 			);

@@ -12,15 +12,14 @@ module.exports = function(grunt) {
 		coffee: {
 			compile: {
 				files: {
-					'src/jquery.prettyselect2.js': ['src/MutationObserverPolyfill.coffee', 'src/jquery.prettyselect2.coffee']
+					'dist/jquery.prettyselect.js': ['src/MutationObserverPolyfill.coffee', 'src/jquery.prettyselect.coffee']
 				}
 			  },
 		},
 		uglify: {
 			my_target: {
 				files: {
-					'dist/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js'],
-					'dist/jquery.prettyselect2.min.js': ['src/jquery.prettyselect2.js']
+					'dist/jquery.prettyselect.min.js': ['dist/jquery.prettyselect.js'],
 				}
 			}
 		},

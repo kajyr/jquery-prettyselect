@@ -56,7 +56,7 @@
           $select.find('option').each(function() {
             var $option;
             $option = $(this);
-            return elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
+            return elements += "<li data-value=" + ($option.attr('value')) + ">" + ($option.html()) + "</li>";
           });
           return elements;
         }
@@ -75,20 +75,19 @@
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
         $drop.hide();
         $wrap.append($drop);
-        $wrap.on('click', 'li', $.proxy(function(e) {
-          var $li, $select;
-          $li = $(e.target);
-          $select = this;
-          $select[0].value = $li.data('value');
-          return $select.trigger('change');
-        }, this.$select));
-        this.$select.on('change', function(e) {
-          var $select, val;
-          $select = $(e.target);
-          val = $select.val();
-          label = $select.find("option[value = " + val + "]").html();
-          return $label.html(label);
-        });
+        $wrap.on('click', 'li', (function(_this) {
+          return function(e) {
+            return _this.$select.val($(e.target).data('value')).trigger('change');
+          };
+        })(this));
+        this.$select.on('change', (function(_this) {
+          return function(e) {
+            var val;
+            val = _this.$select.val();
+            label = _this.$select.find("option[value = " + val + "]").html();
+            return $label.html(label);
+          };
+        })(this));
         $label.on('click', function(e) {
           if ($drop.is(':visible')) {
             return;
