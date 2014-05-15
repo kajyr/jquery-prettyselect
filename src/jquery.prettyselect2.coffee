@@ -121,7 +121,7 @@
 			@options = null;
  
 	# Define the plugin
-	$.fn.extend prettySelect: (option, args...) ->
+	$.fn.extend prettyselect: (option, args...) ->
 		@each ->
 			$this = $(this)
 			data = $this.data('PrettySelect')

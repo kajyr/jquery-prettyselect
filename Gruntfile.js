@@ -6,14 +6,21 @@ module.exports = function(grunt) {
 		jshint: {
 			files: [
 			'Gruntfile.js',
-			'src/*.js',
-			'!src/*.min.js'
+			'src/*.js'
 			]
+		},
+		coffee: {
+			compile: {
+				files: {
+					'src/jquery.prettyselect2.js': 'src/jquery.prettyselect2.coffee', // 1:1 compile
+				}
+			  },
 		},
 		uglify: {
 			my_target: {
 				files: {
-					'dist/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js']
+					'dist/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js'],
+					'dist/jquery.prettyselect2.min.js': ['src/jquery.prettyselect2.js']
 				}
 			}
 		},
@@ -25,9 +32,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks('grunt-contrib-coffee');
 
 	// Default task(s).
-	grunt.registerTask('default', ['uglify']);
-	grunt.registerTask('test', ['uglify', 'qunit']);
+	grunt.registerTask('default', ['coffee', 'uglify']);
+	grunt.registerTask('test', ['coffee', 'uglify', 'qunit']);
 
 };
