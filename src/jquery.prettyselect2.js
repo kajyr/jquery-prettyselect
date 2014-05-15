@@ -1,6 +1,5 @@
 (function() {
-  var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
-    __slice = [].slice;
+  var __slice = [].slice;
 
   (function($) {
     var PrettySelect;
@@ -12,16 +11,6 @@
       };
 
       PrettySelect.prototype.privates = {
-        fire: function(element, event) {
-          var evt;
-          if (__indexOf.call(document, "createEvent") >= 0) {
-            evt = document.createEvent("HTMLEvents");
-            evt.initEvent(event, false, true);
-            return element.dispatchEvent(evt);
-          } else {
-            return element.fireEvent("on" + event);
-          }
-        },
         populate: function($select) {
           var elements, val;
           elements = '';
@@ -75,13 +64,17 @@
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
         $drop.hide();
         this.$wrap.append($drop);
-        this.$wrap.on('click', 'li', function() {
-          this.$select[0].value = $(this).data('value');
-          return this.privates.fire($select[0], 'change');
-        });
-        this.$select.on('change', function() {
-          var val;
-          val = this.$select.val();
+        this.$wrap.on('click', 'li', $.proxy(function(e) {
+          var $li, $select;
+          $li = $(e.target);
+          $select = this;
+          $select[0].value = $li.data('value');
+          return $select.trigger('change');
+        }, this.$select));
+        this.$select.on('change', function(e) {
+          var $select, val;
+          $select = $(e.target);
+          val = $select.val();
           label = $select.find("option[value = " + val + "]").html();
           return $label.html(label);
         });
@@ -96,9 +89,10 @@
           });
         });
         this.privates.mutationObserver(this.$select, $.proxy(function(mutations, observer) {
-          this.$wrap = this.parents("." + this.options.wrapClass);
-          return this.$wrap.find("." + this.options.dropClass).html(this.privates.populate(this));
-        }, this.$select));
+          var $wrap;
+          $wrap = this.$select.parents("." + this.options.wrapClass);
+          return $wrap.find("." + this.options.dropClass).html(this.privates.populate(this.$select));
+        }, this));
       }
 
       PrettySelect.prototype.destroy = function() {
@@ -114,8 +108,8 @@
         }
         $label.detach();
         $ul.detach();
-        this.$select.show().unwrap(options.wrapClass);
-        return this.options = null;
+        this.$select.show().unwrap(this.options.wrapClass);
+        return this.$select.removeData('PrettySelect');
       };
 
       return PrettySelect;

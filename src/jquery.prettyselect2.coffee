@@ -9,14 +9,6 @@
 			dropClass: 'prettyselect-drop'
 
 		privates:
-			fire : (element, event) -> 
-				if "createEvent" in document
-					evt = document.createEvent("HTMLEvents");
-					evt.initEvent(event, false, true);
-					element.dispatchEvent(evt);
-				else
-					element.fireEvent("on"+event);
-			,
 			populate: ($select) ->
 				elements = '';
 				val = $select.val();
@@ -45,8 +37,7 @@
 					observer = new MutationObserver(callBack);
 					observer.observe($element[0], { subtree: true, attributes: false, childList: true })
 					$element.data('mutationObserver', observer)
-				
-			
+			,			
  
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
@@ -68,15 +59,18 @@
 
 			@$wrap.append($drop)
 
-			@$wrap.on('click', 'li', () ->
-					@$select[0].value = $(this).data('value');
-					@privates.fire($select[0], 'change');
-			);
+			@$wrap.on('click', 'li', $.proxy((e) ->
+				$li = $(e.target);
+				$select = this;
+				$select[0].value = $li.data('value')
+				$select.trigger('change')
+			, @$select))
 
-			@$select.on('change', () ->
-					val = @$select.val();
-					label = $select.find("option[value = #{val}]").html();
-					$label.html(label);
+			@$select.on('change', (e) ->
+				$select = $(e.target);
+				val = $select.val();
+				label = $select.find("option[value = #{val}]").html();
+				$label.html(label);
 			);
 
 			$label.on('click', (e) -> 
@@ -93,9 +87,9 @@
 			);
 
 			@privates.mutationObserver(@$select, $.proxy( (mutations, observer) ->
-				@$wrap = this.parents(".#{@options.wrapClass}");
-				@$wrap.find(".#{@options.dropClass}").html(@privates.populate(this));
-			, @$select));
+				$wrap = @$select.parents(".#{@options.wrapClass}");
+				$wrap.find(".#{@options.dropClass}").html(@privates.populate(@$select));
+			, this));
 
 
  
@@ -116,9 +110,9 @@
 
 			@$select
 				.show()
-				.unwrap(options.wrapClass);
+				.unwrap(@options.wrapClass);
 
-			@options = null;
+			@$select.removeData 'PrettySelect'
  
 	# Define the plugin
 	$.fn.extend prettyselect: (option, args...) ->

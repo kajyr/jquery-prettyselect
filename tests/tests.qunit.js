@@ -45,7 +45,6 @@
 		equal($select.parents('.' + randomWrapClass).length, 0, 'It can be destroyed');
 	});
 
-
 /*
 	asyncTest("mutations: changing options", function() {
 
