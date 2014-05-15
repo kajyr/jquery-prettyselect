@@ -17,13 +17,6 @@
 					elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
 				);
 				return elements;
-			,
-			mutationObserver: ($element, callBack) ->
-					MutationObserver = window.MutationObserver;
-					observer = new MutationObserver(callBack);
-					observer.observe($element[0], { subtree: true, attributes: false, childList: true })
-					$element.data('mutationObserver', observer)
-			,			
  
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
@@ -72,10 +65,12 @@
 				);	
 			);
 
-			@privates.mutationObserver(@$select, $.proxy( (mutations, observer) ->
-				$wrap = @$select.parents(".#{@options.wrapClass}");
-				$wrap.find(".#{@options.dropClass}").html(@privates.populate(@$select));
-			, this));
+			MutationObserver = window.MutationObserver;
+			@observer = new MutationObserver( (mutations, observer) =>
+				$wrap = @$select.parents(".#{@options.wrapClass}")
+				$wrap.find(".#{@options.dropClass}").html(@privates.populate(@$select))
+			);
+			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
 
  
@@ -84,13 +79,8 @@
 			$wrap = @$select.parents('.' + @options.wrapClass);
 			$label = $wrap.find('.' + @options.labelClass);
 			$ul = $wrap.find('.' + @options.dropClass);
+			@observer.disconnect()
 
-			observer = @$select.data('mutationObserver')
-			if typeof observer == 'object'
-				observer.disconnect()
-			else
-				window.clearInterval(observer)
-			
 			$label.detach();
 			$ul.detach();
 

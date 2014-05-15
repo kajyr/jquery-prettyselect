@@ -1,10 +1,6 @@
 (function() {
   var MutationObserver;
 
-  if (window.MutationObserver != null) {
-    return;
-  }
-
   MutationObserver = (function() {
     function MutationObserver(callBack) {
       this.callBack = callBack;
@@ -62,22 +58,11 @@
             return elements += '<li data-value="' + $option.attr('value') + '">' + $option.html() + '</li>';
           });
           return elements;
-        },
-        mutationObserver: function($element, callBack) {
-          var MutationObserver, observer;
-          MutationObserver = window.MutationObserver;
-          observer = new MutationObserver(callBack);
-          observer.observe($element[0], {
-            subtree: true,
-            attributes: false,
-            childList: true
-          });
-          return $element.data('mutationObserver', observer);
         }
       };
 
       function PrettySelect(select, options) {
-        var $drop, $label, $wrap, elements, label;
+        var $drop, $label, $wrap, MutationObserver, elements, label;
         this.options = $.extend({}, this.defaults, options);
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
@@ -113,23 +98,26 @@
             return $drop.hide();
           });
         });
-        this.privates.mutationObserver(this.$select, $.proxy(function(mutations, observer) {
-          $wrap = this.$select.parents("." + this.options.wrapClass);
-          return $wrap.find("." + this.options.dropClass).html(this.privates.populate(this.$select));
-        }, this));
+        MutationObserver = window.MutationObserver;
+        this.observer = new MutationObserver((function(_this) {
+          return function(mutations, observer) {
+            $wrap = _this.$select.parents("." + _this.options.wrapClass);
+            return $wrap.find("." + _this.options.dropClass).html(_this.privates.populate(_this.$select));
+          };
+        })(this));
+        this.observer.observe(this.$select[0], {
+          subtree: true,
+          attributes: false,
+          childList: true
+        });
       }
 
       PrettySelect.prototype.destroy = function() {
-        var $label, $ul, $wrap, observer;
+        var $label, $ul, $wrap;
         $wrap = this.$select.parents('.' + this.options.wrapClass);
         $label = $wrap.find('.' + this.options.labelClass);
         $ul = $wrap.find('.' + this.options.dropClass);
-        observer = this.$select.data('mutationObserver');
-        if (typeof observer === 'object') {
-          observer.disconnect();
-        } else {
-          window.clearInterval(observer);
-        }
+        this.observer.disconnect();
         $label.detach();
         $ul.detach();
         this.$select.show().unwrap(this.options.wrapClass);
