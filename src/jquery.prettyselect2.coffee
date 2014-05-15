@@ -45,21 +45,21 @@
 			@$select
 				.hide()
 				.wrap("<div class=#{@options.wrapClass}/>")
-			@$wrap = @$select.parents('.' + @options.wrapClass)
+			$wrap = @$select.parents('.' + @options.wrapClass)
 
 			label = @$select.find('option:selected').html()
 			$label = $("<div class=#{@options.labelClass}/>").html(label)
 
-			@$wrap.append($label)
+			$wrap.append($label)
 
 			elements = @privates.populate(@$select)
 			$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
 
 			$drop.hide()
 
-			@$wrap.append($drop)
+			$wrap.append($drop)
 
-			@$wrap.on('click', 'li', $.proxy((e) ->
+			$wrap.on('click', 'li', $.proxy((e) ->
 				$li = $(e.target);
 				$select = this;
 				$select[0].value = $li.data('value')

@@ -52,19 +52,19 @@
       };
 
       function PrettySelect(select, options) {
-        var $drop, $label, elements, label;
+        var $drop, $label, $wrap, elements, label;
         this.options = $.extend({}, this.defaults, options);
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
-        this.$wrap = this.$select.parents('.' + this.options.wrapClass);
+        $wrap = this.$select.parents('.' + this.options.wrapClass);
         label = this.$select.find('option:selected').html();
         $label = $("<div class=" + this.options.labelClass + "/>").html(label);
-        this.$wrap.append($label);
+        $wrap.append($label);
         elements = this.privates.populate(this.$select);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
         $drop.hide();
-        this.$wrap.append($drop);
-        this.$wrap.on('click', 'li', $.proxy(function(e) {
+        $wrap.append($drop);
+        $wrap.on('click', 'li', $.proxy(function(e) {
           var $li, $select;
           $li = $(e.target);
           $select = this;
@@ -89,7 +89,6 @@
           });
         });
         this.privates.mutationObserver(this.$select, $.proxy(function(mutations, observer) {
-          var $wrap;
           $wrap = this.$select.parents("." + this.options.wrapClass);
           return $wrap.find("." + this.options.dropClass).html(this.privates.populate(this.$select));
         }, this));
