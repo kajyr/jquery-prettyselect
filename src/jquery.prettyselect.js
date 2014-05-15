@@ -107,7 +107,6 @@
 			});
 
 			privates.mutationObserver($select, $.proxy(function(mutations, observer) {
-				console.log(mutations);
 				var $wrap = this.parents('.' + options.wrapClass);
 				$wrap.find('.' + options.dropClass).html(privates.populate(this));
 			}, $select));
