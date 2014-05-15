@@ -17,17 +17,17 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		nodeunit: {
-			all: ['tests/*.nodeunit.js']
+		qunit: {
+			all: ['tests/tests.html']
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-nodeunit');
+	grunt.loadNpmTasks('grunt-contrib-qunit');
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint', 'uglify']);
-	grunt.registerTask('test', ['jshint', 'uglify', 'nodeunit']);
+	grunt.registerTask('test', ['uglify', 'qunit']);
 
 };
