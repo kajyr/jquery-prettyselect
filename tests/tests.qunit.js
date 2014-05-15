@@ -3,7 +3,7 @@
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 
 (function($) {
-	
+
 	test("basic: instantiation", function() {
 		var $select = $('select#basic').prettyselect();
 
@@ -46,7 +46,7 @@
 	});
 
 
-
+/*
 	asyncTest("mutations: changing options", function() {
 
 		var $select = $('select#basic').prettyselect();
@@ -65,7 +65,7 @@
 			start();
 		}, 100);
 	});
-
+*/
 	test("interface: open and close", function() {
 
 		var $select = $('select#basic').prettyselect();
@@ -104,5 +104,5 @@
 	ok($label.text() === $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
 });
-	
+
 }(jQuery));

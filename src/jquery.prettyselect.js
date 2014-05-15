@@ -40,7 +40,7 @@
 				}, {
 					element: $element,
 					callBack: callBack
-				}), 200);
+				}), 50);
 				$element.data('mutationObserver', interval);
 
 
