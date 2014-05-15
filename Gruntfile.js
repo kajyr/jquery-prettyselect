@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 		uglify: {
 			my_target: {
 				files: {
-					'src/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js']
+					'dist/jquery.prettyselect.min.js': ['src/jquery.prettyselect.js']
 				}
 			}
 		},
