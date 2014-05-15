@@ -1,6 +1,10 @@
 (function() {
   var MutationObserver;
 
+  if (window.MutationObserver != null) {
+    return;
+  }
+
   MutationObserver = (function() {
     function MutationObserver(callBack) {
       this.callBack = callBack;
@@ -12,9 +16,6 @@
         return function() {
           var html;
           html = _this.element.innerHTML;
-          if (_this.oldHtml == null) {
-            _this.oldHtml = html;
-          }
           if (html !== _this.oldHtml) {
             _this.oldHtml = html;
             return _this.callBack.apply(null);

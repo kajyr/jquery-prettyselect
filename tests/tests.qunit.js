@@ -4,48 +4,7 @@
 
 (function($) {
 
-	test("basic: instantiation", function() {
-		var $select = $('select#basic').prettyselect();
 
-		equal($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');
-
-		$select.prettyselect();
-
-		equal($('.prettyselect-wrap').length, 1, 'If called another time, it does nothing');
-
-		$select.prettyselect('destroy');
-
-		equal($select.parents('.prettyselect-wrap').length, 0, 'It can be destroyed');
-
-		$select.prettyselect();
-
-		equal($select.parents('.prettyselect-wrap').length, 1, 'Can be reinstantiated');
-
-		$select.prettyselect('destroy');
-	});
-
-	test("basic: class names changed", function() {
-
-		var randomWrapClass = Math.random().toString(36).substring(7);
-		var randomLabelClass = Math.random().toString(36).substring(7);
-
-		var $select = $('select#basic').prettyselect({
-			wrapClass: randomWrapClass,
-			labelClass: randomLabelClass
-		});
-
-		equal($select.parents('.' + randomWrapClass).length, 1, 'There is a wrap element');
-
-		$select.prettyselect();
-
-		equal($('.' + randomWrapClass).length, 1, 'If called another time, it does nothing');
-
-		$select.prettyselect('destroy');
-
-		equal($select.parents('.' + randomWrapClass).length, 0, 'It can be destroyed');
-	});
-
-/*
 	asyncTest("mutations: changing options", function() {
 
 		var $select = $('select#basic').prettyselect();
@@ -60,11 +19,13 @@
 			equal(numElements + 1, newElements, 'The number of <li> elements should be increased by one');
 
 			equal($wrap.find('li[data-value="z"]').length, 1, 'There should be the new element');
+			
+			$select.prettyselect('destroy');
 
 			start();
 		}, 500);
 	});
-*/
+
 	test("interface: open and close", function() {
 
 		var $select = $('select#basic').prettyselect();
@@ -84,6 +45,8 @@
 
 		ok($drop.is(':hidden'), 'After clicking on another element the drop is hidden');
 
+		$select.prettyselect('destroy');
+
 	});
 
 	test("interface: clicks", function() {
@@ -94,14 +57,15 @@
 
 		var $label = $wrap.find('.prettyselect-label');
 
-	//clicco su un elemento
-	var $elem = $wrap.find('ul li:last-child');
-	var value = $elem.data('value').toString();
-	$elem.trigger('click');
+		//clicco su un elemento
+		var $elem = $wrap.find('ul li:last-child');
+		var value = $elem.data('value').toString();
+		$elem.trigger('click');
 
-	ok($select.val() === value, 'Clicking on an interface element changes select value');
-	ok($label.text() === $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
+		ok($select.val() === value, 'Clicking on an interface element changes select value');
+		ok($label.text() === $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
-});
+		$select.prettyselect('destroy');
+	});
 
 }(jQuery));

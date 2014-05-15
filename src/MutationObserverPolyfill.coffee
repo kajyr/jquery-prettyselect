@@ -10,9 +10,6 @@ class MutationObserver
 		@interval = setInterval  () =>
 				
 			html = @element.innerHTML
-			
-			if not @oldHtml?
-				@oldHtml = html
 
 			if html != @oldHtml
 				@oldHtml = html

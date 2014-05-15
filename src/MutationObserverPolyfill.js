@@ -2,10 +2,6 @@
 (function() {
   var MutationObserver;
 
-  if (window.MutationObserver != null) {
-    return;
-  }
-
   MutationObserver = (function() {
     function MutationObserver(callBack) {
       this.callBack = callBack;
@@ -22,10 +18,11 @@
           }
           if (html !== _this.oldHtml) {
             _this.oldHtml = html;
+            
             return _this.callBack.apply(null);
           }
         };
-      })(this), 200);
+      })(this), 10);
     };
 
     MutationObserver.prototype.disconnect = function() {
