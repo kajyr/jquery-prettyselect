@@ -50,9 +50,8 @@
 
       PrettySelect.prototype.privates = {
         populate: function($select) {
-          var elements, val;
+          var elements;
           elements = '';
-          val = $select.val();
           $select.find('option').each(function() {
             var $option;
             $option = $(this);

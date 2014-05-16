@@ -11,7 +11,6 @@
 		privates:
 			populate: ($select) ->
 				elements = '';
-				val = $select.val()
 				$select.find('option').each( () ->
 					$option = $(this)
 					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"

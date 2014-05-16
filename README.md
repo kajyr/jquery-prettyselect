@@ -25,5 +25,9 @@ Properties:
 + labelClass: 'prettyselect-label'
 + dropClass: 'prettyselect-drop'
 
+## TODO:
++ check if elements pre-selected ( as in the selected attribute) are rendered correctly upon instantiation
++ check for multiple selects
+
 ## Updates:
 - Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill
