@@ -26,26 +26,4 @@
 		}, 500);
 	});
 
-	test("interface: clicks", function() {
-
-		var $select = $('select#basic').prettyselect();
-
-		var $wrap = $select.parents('.prettyselect-wrap');
-
-		var $label = $wrap.find('.prettyselect-label');
-
-		//clicco su un elemento
-		var $elem = $wrap.find('ul li:last-child');
-
-		var value = $elem.data('value').toString();
-		
-		$elem.trigger('click');
-
-		ok($select.val() === value, 'Clicking on an interface element changes select value');
-
-		ok($label.text() === $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
-
-		$select.prettyselect('destroy');
-	});
-
 }(jQuery));

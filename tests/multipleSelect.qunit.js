@@ -6,6 +6,7 @@
 
 	test("interface: open and close", function() {
 
+		
 		var $selectOne = $('select#basic').prettyselect();
 		var $selectTwo = $('select#secondary').prettyselect();
 
@@ -14,8 +15,7 @@
 
 		notStrictEqual($parentOne[0], $parentTwo[0], 'Each select has own wrap');
 
-
-
+		
 	});
 
 
