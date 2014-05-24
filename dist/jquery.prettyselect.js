@@ -62,17 +62,15 @@
       };
 
       function PrettySelect(select, options) {
-        var $drop, $label, $wrap, MutationObserver, elements, label;
+        var $drop, $label, $wrap, MutationObserver, elements;
         this.options = $.extend({}, this.defaults, options);
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
         $wrap = this.$select.parents('.' + this.options.wrapClass);
-        label = this.$select.find('option:selected').html();
-        $label = $("<div class=" + this.options.labelClass + "/>").html(label);
+        $label = $("<div class=" + this.options.labelClass + "/>").html(this.$select.find('option:selected').html());
         $wrap.append($label);
         elements = this.privates.populate(this.$select);
-        $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
-        $drop.hide();
+        $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         $wrap.append($drop);
         $wrap.on('click', 'li', (function(_this) {
           return function(e) {
@@ -81,7 +79,7 @@
         })(this));
         this.$select.on('change', (function(_this) {
           return function(e) {
-            var val;
+            var label, val;
             val = _this.$select.val();
             label = _this.$select.find("option[value = " + val + "]").html();
             return $label.html(label);

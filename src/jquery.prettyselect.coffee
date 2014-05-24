@@ -25,15 +25,15 @@
 				.wrap("<div class=#{@options.wrapClass}/>")
 			$wrap = @$select.parents('.' + @options.wrapClass)
 
-			label = @$select.find('option:selected').html()
-			$label = $("<div class=#{@options.labelClass}/>").html(label)
+			$label = $("<div class=#{@options.labelClass}/>").html(
+				@$select.find('option:selected').html()
+			)
 
 			$wrap.append($label)
 
 			elements = @privates.populate(@$select)
 			$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
-
-			$drop.hide()
+				.hide()
 
 			$wrap.append($drop)
 

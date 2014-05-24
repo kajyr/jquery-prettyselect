@@ -29,7 +29,8 @@
     "grunt-cli": "~0.1.13",
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-qunit": "^0.4.0",
-    "grunt-contrib-coffee": "^0.10.1"
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-watch": "^0.6.1"
   },
   "dependencies": {
     "jquery": ">=1.8"

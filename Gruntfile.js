@@ -25,12 +25,22 @@ module.exports = function(grunt) {
 		},
 		qunit: {
 			all: ['tests/tests.html']
+		},
+		watch: {
+			scripts: {
+				files: ['**/*.coffee'],
+				tasks: ['coffee'],
+				options: {
+					spawn: false,
+				},
+			},
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Default task(s).
 	grunt.registerTask('default', ['coffee', 'uglify']);
