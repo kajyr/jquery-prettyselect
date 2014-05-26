@@ -18,6 +18,18 @@ $('select').prettyselect();
 $('select').prettyselect(options);
 ```
 
+### Placeholder
+
+It is possible to specify one of the ```<option>``` elements as the placeholder, with the data-placeholder attribute. This element would not be selectable and will disappear after the user makes the first selection
+
+```html
+<select name="" id="">
+	<option value="1" data-placeholder>a</option>
+	<option value="2">b</option>
+	<option value="3">c</option>
+</select>
+```
+
 Properties:
 
 + wrapClass: 'prettyselect-wrap'
