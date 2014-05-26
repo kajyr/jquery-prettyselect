@@ -26,7 +26,7 @@ $('select').prettyselect({
 
 ### Placeholder
 
-It is possible to specify one of the ```<option>``` elements as the placeholder, with the data-placeholder attribute. This element would not be selectable and will disappear after the user makes the first selection
+It is possible to specify one of the ```<option>``` elements as the ```placeholder```, with the data-placeholder attribute. This element would not be selectable and will disappear after the user makes the first selection
 
 ```html
 <select name="" id="">
@@ -36,11 +36,5 @@ It is possible to specify one of the ```<option>``` elements as the placeholder,
 </select>
 ```
 
-
-## TODO:
-+ check if elements pre-selected ( as in the selected attribute) are rendered correctly upon instantiation
-+ check for multiple selects
-
-
-## Updates:
+## Updates
 - Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill
