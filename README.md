@@ -14,8 +14,14 @@ $('select').prettyselect();
 
 ##Options
 
+It is possible to change the basic class names used by the plugin.
+
 ```javascript
-$('select').prettyselect(options);
+$('select').prettyselect({
+	wrapClass: 'prettyselect-wrap',
+	labelClass: 'prettyselect-label',
+	dropClass: 'prettyselect-drop'
+});
 ```
 
 ### Placeholder
@@ -30,11 +36,6 @@ It is possible to specify one of the ```<option>``` elements as the placeholder,
 </select>
 ```
 
-Properties:
-
-+ wrapClass: 'prettyselect-wrap'
-+ labelClass: 'prettyselect-label'
-+ dropClass: 'prettyselect-drop'
 
 ## TODO:
 + check if elements pre-selected ( as in the selected attribute) are rendered correctly upon instantiation
