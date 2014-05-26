@@ -52,7 +52,7 @@
         populate: function($select) {
           var elements;
           elements = '';
-          $select.find('option').each(function() {
+          $select.find('option:not([data-placeholder])').each(function() {
             var $option;
             $option = $(this);
             return elements += "<li data-value=" + ($option.attr('value')) + ">" + ($option.html()) + "</li>";
@@ -62,12 +62,17 @@
       };
 
       function PrettySelect(select, options) {
-        var $drop, $label, $wrap, MutationObserver, elements;
+        var $drop, $label, $wrap, MutationObserver, elements, labelText;
         this.options = $.extend({}, this.defaults, options);
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
         $wrap = this.$select.parents('.' + this.options.wrapClass);
-        $label = $("<div class=" + this.options.labelClass + "/>").html(this.$select.find('option:selected').html());
+        if (this.$select.find('option[data-placeholder]').length > 0) {
+          labelText = this.$select.find('option[data-placeholder]').text();
+        } else {
+          labelText = this.$select.find('option:selected').text();
+        }
+        $label = $("<div class=" + this.options.labelClass + "/>").html(labelText);
         $wrap.append($label);
         elements = this.privates.populate(this.$select);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();

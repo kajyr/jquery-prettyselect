@@ -11,7 +11,7 @@
 		privates:
 			populate: ($select) ->
 				elements = '';
-				$select.find('option').each( () ->
+				$select.find('option:not([data-placeholder])').each( () ->
 					$option = $(this)
 					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
 				);
@@ -25,8 +25,13 @@
 				.wrap("<div class=#{@options.wrapClass}/>")
 			$wrap = @$select.parents('.' + @options.wrapClass)
 
+			if @$select.find('option[data-placeholder]').length > 0
+				labelText = @$select.find('option[data-placeholder]').text()
+			else
+				labelText = @$select.find('option:selected').text()
+
 			$label = $("<div class=#{@options.labelClass}/>").html(
-				@$select.find('option:selected').html()
+				labelText
 			)
 
 			$wrap.append($label)
