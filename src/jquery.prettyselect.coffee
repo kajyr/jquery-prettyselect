@@ -11,7 +11,7 @@
 		privates:
 			populate: ($select) ->
 				elements = '';
-				$select.find('option:not([data-placeholder])').each( () ->
+				$select.find('option[value!=""]:not([data-placeholder])').each( () ->
 					$option = $(this)
 					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
 				);

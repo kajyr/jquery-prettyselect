@@ -52,7 +52,7 @@
         populate: function($select) {
           var elements;
           elements = '';
-          $select.find('option:not([data-placeholder])').each(function() {
+          $select.find('option[value!=""]:not([data-placeholder])').each(function() {
             var $option;
             $option = $(this);
             return elements += "<li data-value=" + ($option.attr('value')) + ">" + ($option.html()) + "</li>";
