@@ -49,20 +49,21 @@
       };
 
       PrettySelect.prototype.privates = {
-        populate: function($select) {
+        populate: function($options) {
           var elements;
           elements = '';
-          $select.find('option[value!=""]:not([data-placeholder])').each(function() {
+          $options.each(function() {
             var $option;
             $option = $(this);
             return elements += "<li data-value=" + ($option.attr('value')) + ">" + ($option.html()) + "</li>";
           });
           return elements;
-        }
+        },
+        optionsSelector: 'option[value!=""]:not([data-placeholder])'
       };
 
       function PrettySelect(select, options) {
-        var $drop, $label, $wrap, MutationObserver, elements, labelText;
+        var $drop, $label, $options, $wrap, MutationObserver, elements, labelText;
         this.options = $.extend({}, this.defaults, options);
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
@@ -74,7 +75,9 @@
         }
         $label = $("<div class=" + this.options.labelClass + "/>").html(labelText);
         $wrap.append($label);
-        elements = this.privates.populate(this.$select);
+        $options = this.$select.find(this.privates.optionsSelector);
+        $wrap.data('prettyselect-elements', $options.length);
+        elements = this.privates.populate($options);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         $wrap.append($drop);
         $wrap.on('click', 'li', (function(_this) {
@@ -103,8 +106,10 @@
         MutationObserver = window.MutationObserver;
         this.observer = new MutationObserver((function(_this) {
           return function(mutations, observer) {
+            $options = _this.$select.find(_this.privates.optionsSelector);
             $wrap = _this.$select.parents("." + _this.options.wrapClass);
-            return $wrap.find("." + _this.options.dropClass).html(_this.privates.populate(_this.$select));
+            $wrap.data('prettyselect-elements', $options.length);
+            return $wrap.find("." + _this.options.dropClass).html(_this.privates.populate($options));
           };
         })(this));
         this.observer.observe(this.$select[0], {

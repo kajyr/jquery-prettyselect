@@ -9,13 +9,15 @@
 			dropClass: 'prettyselect-drop'
 
 		privates:
-			populate: ($select) ->
+			populate: ($options) ->
 				elements = '';
-				$select.find('option[value!=""]:not([data-placeholder])').each( () ->
+				$options.each( () ->
 					$option = $(this)
 					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
 				);
 				return elements;
+
+			optionsSelector: 'option[value!=""]:not([data-placeholder])'
  
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
@@ -36,7 +38,11 @@
 
 			$wrap.append($label)
 
-			elements = @privates.populate(@$select)
+			$options = @$select.find(@privates.optionsSelector)
+
+			$wrap.data('prettyselect-elements', $options.length)
+
+			elements = @privates.populate($options)
 			$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
 				.hide()
 
@@ -69,8 +75,13 @@
 
 			MutationObserver = window.MutationObserver;
 			@observer = new MutationObserver( (mutations, observer) =>
+
+				$options = @$select.find(@privates.optionsSelector)
+				
 				$wrap = @$select.parents(".#{@options.wrapClass}")
-				$wrap.find(".#{@options.dropClass}").html(@privates.populate(@$select))
+
+				$wrap.data('prettyselect-elements', $options.length)
+				$wrap.find(".#{@options.dropClass}").html(@privates.populate($options))
 			);
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
