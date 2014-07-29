@@ -16,6 +16,11 @@
 					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
 				);
 				return elements;
+			getLabel: ($select) ->
+				if $select.find('option[data-placeholder]').length > 0
+					labelText = $select.find('option[data-placeholder]').text()
+				else
+					labelText = $select.find('option:selected').text()
 
 			optionsSelector: 'option[value!=""]:not([data-placeholder])'
  
@@ -27,21 +32,14 @@
 				.wrap("<div class=#{@options.wrapClass}/>")
 			$wrap = @$select.parents('.' + @options.wrapClass)
 
-			if @$select.find('option[data-placeholder]').length > 0
-				labelText = @$select.find('option[data-placeholder]').text()
-			else
-				labelText = @$select.find('option:selected').text()
-
 			$label = $("<div class=#{@options.labelClass}/>").html(
-				labelText
+				@privates.getLabel(@$select)
 			)
-
-			
 
 			$options = @$select.find(@privates.optionsSelector)
 
-			
 			elements = @privates.populate($options)
+
 			$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
 				.hide()
 
@@ -78,10 +76,9 @@
 
 				$options = @$select.find(@privates.optionsSelector)
 				
-				$wrap = @$select.parents(".#{@options.wrapClass}")
-
-				$wrap.data('prettyselect-elements', $options.length)
-				$wrap.find(".#{@options.dropClass}").html(@privates.populate($options))
+				@$select.parents(".#{@options.wrapClass}")
+					.attr('data-prettyselect-elements', $options.length)
+					.find(".#{@options.dropClass}").html(@privates.populate($options))
 			);
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
