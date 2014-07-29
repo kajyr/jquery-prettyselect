@@ -37,4 +37,5 @@ It is possible to specify one of the ```<option>``` elements as the ```placehold
 ```
 
 ## Updates
+- Added ```data-prettyselect-elements``` to the wrapper to expose the counter of option elements in the select
 - Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill
