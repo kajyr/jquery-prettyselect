@@ -14,6 +14,18 @@ $('select').prettyselect();
 
 ##Options
 
+### onlyValuedOptions
+
+_(default: false)_
+
+It is possible to avoid selecting ```<option>``` elements that don't have the value attribute 
+
+```javascript
+$('select').prettyselect({
+	onlyValuedOptions: true
+});
+```
+
 It is possible to change the basic class names used by the plugin.
 
 ```javascript
@@ -37,5 +49,6 @@ It is possible to specify one of the ```<option>``` elements as the ```placehold
 ```
 
 ## Updates
+- Added ```onlyValuedOptions``` option
 - Added ```data-prettyselect-elements``` to the wrapper to expose the counter of option elements in the select
 - Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill

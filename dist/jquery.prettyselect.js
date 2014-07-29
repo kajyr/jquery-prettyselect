@@ -45,7 +45,8 @@
       PrettySelect.prototype.defaults = {
         wrapClass: 'prettyselect-wrap',
         labelClass: 'prettyselect-label',
-        dropClass: 'prettyselect-drop'
+        dropClass: 'prettyselect-drop',
+        onlyValuedOptions: false
       };
 
       PrettySelect.prototype.privates = {
@@ -67,17 +68,21 @@
             return labelText = $select.find('option:selected').text();
           }
         },
-        optionsSelector: 'option[value!=""]:not([data-placeholder])'
+        optionsSelector: {
+          onlyWithValue: 'option[value][value!=""]:not([data-placeholder])',
+          withoutValue: 'option:not([data-placeholder])'
+        }
       };
 
       function PrettySelect(select, options) {
         var $drop, $label, $options, $wrap, MutationObserver, elements;
         this.options = $.extend({}, this.defaults, options);
+        this.options.optionsSelector = this.options.onlyValuedOptions ? this.privates.optionsSelector.onlyWithValue : this.privates.optionsSelector.withoutValue;
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
         $wrap = this.$select.parents('.' + this.options.wrapClass);
         $label = $("<div class=" + this.options.labelClass + "/>").html(this.privates.getLabel(this.$select));
-        $options = this.$select.find(this.privates.optionsSelector);
+        $options = this.$select.find(this.options.optionsSelector);
         elements = this.privates.populate($options);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         $wrap.attr('data-prettyselect-elements', $options.length).append($label).append($drop).on('click', 'li', (function(_this) {
@@ -106,7 +111,7 @@
         MutationObserver = window.MutationObserver;
         this.observer = new MutationObserver((function(_this) {
           return function(mutations, observer) {
-            $options = _this.$select.find(_this.privates.optionsSelector);
+            $options = _this.$select.find(_this.options.optionsSelector);
             return _this.$select.parents("." + _this.options.wrapClass).attr('data-prettyselect-elements', $options.length).find("." + _this.options.dropClass).html(_this.privates.populate($options));
           };
         })(this));

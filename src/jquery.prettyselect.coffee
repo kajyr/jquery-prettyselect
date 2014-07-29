@@ -7,6 +7,7 @@
 			wrapClass: 'prettyselect-wrap'
 			labelClass: 'prettyselect-label'
 			dropClass: 'prettyselect-drop'
+			onlyValuedOptions: false
 
 		privates:
 			populate: ($options) ->
@@ -21,11 +22,16 @@
 					labelText = $select.find('option[data-placeholder]').text()
 				else
 					labelText = $select.find('option:selected').text()
-
-			optionsSelector: 'option[value!=""]:not([data-placeholder])'
+					
+			optionsSelector:
+				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
+				withoutValue: 'option:not([data-placeholder])'
  
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
+
+			@options.optionsSelector = if @options.onlyValuedOptions then @privates.optionsSelector.onlyWithValue else @privates.optionsSelector.withoutValue
+
 			@$select = $(select)
 			@$select
 				.hide()
@@ -36,7 +42,7 @@
 				@privates.getLabel(@$select)
 			)
 
-			$options = @$select.find(@privates.optionsSelector)
+			$options = @$select.find(@options.optionsSelector)
 
 			elements = @privates.populate($options)
 
@@ -74,7 +80,7 @@
 			MutationObserver = window.MutationObserver;
 			@observer = new MutationObserver( (mutations, observer) =>
 
-				$options = @$select.find(@privates.optionsSelector)
+				$options = @$select.find(@options.optionsSelector)
 				
 				@$select.parents(".#{@options.wrapClass}")
 					.attr('data-prettyselect-elements', $options.length)
