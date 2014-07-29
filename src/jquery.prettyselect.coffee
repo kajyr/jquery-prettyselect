@@ -36,27 +36,27 @@
 				labelText
 			)
 
-			$wrap.append($label)
+			
 
 			$options = @$select.find(@privates.optionsSelector)
 
-			$wrap.data('prettyselect-elements', $options.length)
-
+			
 			elements = @privates.populate($options)
 			$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
 				.hide()
 
-			$wrap.append($drop)
-
-			$wrap.on('click', 'li', (e) =>
-				@$select
-					.val $(e.target).data('value')
-					.trigger 'change'
+			$wrap.attr('data-prettyselect-elements', $options.length)
+				.append($label)
+				.append($drop)
+				.on('click', 'li', (e) =>
+					@$select
+						.val $(e.target).data('value')
+						.trigger 'change'
 			)
 
 			@$select.on('change', (e) =>
-				val = @$select.val();
-				label = @$select.find("option[value = #{val}]").html();
+				val = @$select.val()
+				label = @$select.find("option[value = #{val}]").html()
 				$label.html(label);
 			);
 

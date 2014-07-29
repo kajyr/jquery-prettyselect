@@ -74,13 +74,10 @@
           labelText = this.$select.find('option:selected').text();
         }
         $label = $("<div class=" + this.options.labelClass + "/>").html(labelText);
-        $wrap.append($label);
         $options = this.$select.find(this.privates.optionsSelector);
-        $wrap.data('prettyselect-elements', $options.length);
         elements = this.privates.populate($options);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
-        $wrap.append($drop);
-        $wrap.on('click', 'li', (function(_this) {
+        $wrap.attr('data-prettyselect-elements', $options.length).append($label).append($drop).on('click', 'li', (function(_this) {
           return function(e) {
             return _this.$select.val($(e.target).data('value')).trigger('change');
           };
