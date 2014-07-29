@@ -26,6 +26,8 @@ $('select').prettyselect({
 });
 ```
 
+### Class Names
+
 It is possible to change the basic class names used by the plugin.
 
 ```javascript
