@@ -94,7 +94,7 @@
           return function(e) {
             var label, val;
             val = _this.$select.val();
-            label = _this.$select.find("option[value = " + val + "]").html();
+            label = _this.$select.find("option[value = '" + val + "']").html();
             return $label.html(label);
           };
         })(this));

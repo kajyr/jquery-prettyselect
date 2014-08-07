@@ -60,7 +60,7 @@
 
 			@$select.on('change', (e) =>
 				val = @$select.val()
-				label = @$select.find("option[value = #{val}]").html()
+				label = @$select.find("option[value = '#{val}']").html()
 				$label.html(label);
 			);
 
