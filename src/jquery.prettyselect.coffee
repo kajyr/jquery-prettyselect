@@ -14,7 +14,7 @@
 				elements = '';
 				$options.each( () ->
 					$option = $(this)
-					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
+					elements += "<li data-value='#{$option.attr('value')}'>#{$option.html()}</li>"
 				);
 				return elements;
 			getLabel: ($select) ->

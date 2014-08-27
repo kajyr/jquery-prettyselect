@@ -56,7 +56,7 @@
           $options.each(function() {
             var $option;
             $option = $(this);
-            return elements += "<li data-value=" + ($option.attr('value')) + ">" + ($option.html()) + "</li>";
+            return elements += "<li data-value='" + ($option.attr('value')) + "'>" + ($option.html()) + "</li>";
           });
           return elements;
         },
