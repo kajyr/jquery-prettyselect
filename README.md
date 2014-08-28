@@ -52,7 +52,7 @@ It is possible to specify one of the ```<option>``` elements as the ```placehold
 
 ## Updates
 			
-### 1.1.3
+### 1.1.4
 Fixed bug where json objects are used as option's value
 ```<option value="{&quot;id&quot;: &quot;23&quot;, &quot;text&quot;:&quot;鄂州市&quot;}">鄂州市</option>```
 
