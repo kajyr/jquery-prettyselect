@@ -54,7 +54,7 @@
 				.append($drop)
 				.on('click', 'li', (e) =>
 					@$select
-						.val $(e.target).data('value')
+						.val $(e.target).attr('data-value')
 						.trigger 'change'
 			)
 

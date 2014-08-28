@@ -34,5 +34,18 @@
 		$select2.prettyselect('destroy');
 	});
 
+	test("interface: clicks on nasty values", function() {
+
+		var $select = $('select#nasty').prettyselect();
+		var $wrap = $select.parents('.prettyselect-wrap');
+		var $elem = $wrap.find('ul li:last-child');
+
+		var value = $elem.attr('data-value');
+
+		$elem.trigger('click');
+
+		ok($select.val() === value, 'Clicking on an interface element changes select value');
+
+	});
 
 }(jQuery));

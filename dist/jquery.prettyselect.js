@@ -87,7 +87,7 @@
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         $wrap.attr('data-prettyselect-elements', $options.length).append($label).append($drop).on('click', 'li', (function(_this) {
           return function(e) {
-            return _this.$select.val($(e.target).data('value')).trigger('change');
+            return _this.$select.val($(e.target).attr('data-value')).trigger('change');
           };
         })(this));
         this.$select.on('change', (function(_this) {
