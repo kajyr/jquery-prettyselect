@@ -3,18 +3,12 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		jshint: {
-			files: [
-			'Gruntfile.js',
-			'src/*.js'
-			]
-		},
 		coffee: {
 			compile: {
 				files: {
 					'dist/jquery.prettyselect.js': ['src/MutationObserverPolyfill.coffee', 'src/jquery.prettyselect.coffee']
 				}
-			  },
+			},
 		},
 		uglify: {
 			my_target: {
@@ -25,6 +19,12 @@ module.exports = function(grunt) {
 		},
 		qunit: {
 			all: ['tests/tests.html']
+		},
+		copy: {
+			main: {
+				src: 'package.json',
+				dest: 'jquery-prettyselect.jquery.json',
+			},
 		},
 		watch: {
 			scripts: {
@@ -41,6 +41,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-release');
 
 	// Default task(s).
 	grunt.registerTask('default', ['coffee', 'uglify']);
