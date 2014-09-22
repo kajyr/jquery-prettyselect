@@ -50,6 +50,20 @@ It is possible to specify one of the ```<option>``` elements as the ```placehold
 </select>
 ```
 
+### Disabling
+
+After instantiation, it is possible to disable the select with the 'disable' command. The clicks on this element shoud not trigger changes
+
+```javascript
+$('select').prettyselect('disable');
+```
+
+To undo disabling, there's the enable command
+
+```javascript
+$('select').prettyselect('enable');
+```
+
 ## Updates
 			
 ### 1.1.4
