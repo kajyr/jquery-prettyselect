@@ -35,5 +35,26 @@
 	
 	});
 
+	test("open-close on disabled prettyselect", function() {
+
+		var $select = $('select#basic').prettyselect();
+
+		var $wrap = $select.parents('.prettyselect-wrap');
+		var $drop = $wrap.find('ul');
+		var $label = $wrap.find('.prettyselect-label');
+
+		$select.prettyselect('disable');
+
+		$label.trigger('click');
+
+		ok($drop.is(':hidden'), 'Clicking on a disabled select does not open the drop');
+
+		$select.prettyselect('enable');
+
+		$label.trigger('click');
+
+		ok($drop.is(':visible'), 'Clicking on a disabled select does not open the drop');
+	});
+
 
 }(jQuery));

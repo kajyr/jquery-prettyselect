@@ -7,6 +7,7 @@
 			wrapClass: 'prettyselect-wrap'
 			labelClass: 'prettyselect-label'
 			dropClass: 'prettyselect-drop'
+			disabledClass: 'prettyselect-disabled'
 			onlyValuedOptions: false
 
 		privates:
@@ -22,7 +23,9 @@
 					labelText = $select.find('option[data-placeholder]').text()
 				else
 					labelText = $select.find('option:selected').text()
-					
+			isDisabled: ($select) ->
+				$select.attr('disabled') == 'disabled'
+
 			optionsSelector:
 				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
 				withoutValue: 'option:not([data-placeholder])'
@@ -53,6 +56,7 @@
 				.append($label)
 				.append($drop)
 				.on('click', 'li', (e) =>
+					return if @privates.isDisabled(@$select)
 					@$select
 						.val $(e.target).attr('data-value')
 						.trigger 'change'
@@ -64,8 +68,8 @@
 				$label.html(label);
 			);
 
-			$label.on('click', (e) -> 
-				return if $drop.is(':visible')
+			$label.on('click', (e) => 
+				return if $drop.is(':visible') or @privates.isDisabled(@$select)
 				e.stopPropagation()
 
 				$drop.show()
@@ -88,23 +92,32 @@
 			);
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
-
- 
-		# Additional plugin methods go here
 		destroy: () ->
-			$wrap = @$select.parents('.' + @options.wrapClass);
-			$label = $wrap.find('.' + @options.labelClass);
-			$ul = $wrap.find('.' + @options.dropClass);
+			$wrap = @$select.parents('.' + @options.wrapClass)
+			$label = $wrap.find('.' + @options.labelClass)
+			$ul = $wrap.find('.' + @options.dropClass)
 			@observer.disconnect()
 
-			$label.detach();
-			$ul.detach();
+			$label.detach()
+			$ul.detach()
 
 			@$select
 				.show()
-				.unwrap(@options.wrapClass);
+				.unwrap(@options.wrapClass)
 
 			@$select.removeData 'PrettySelect'
+
+		disable: () ->
+			@$select
+				.attr('disabled', 'disabled')
+				.parents('.' + @options.wrapClass)
+				.addClass(@options.disabledClass)
+
+		enable: () ->
+			@$select
+				.removeAttr('disabled', 'disabled')
+				.parents('.' + @options.wrapClass)
+				.removeClass(@options.disabledClass)
  
 	# Define the plugin
 	$.fn.extend prettyselect: (option, args...) ->
