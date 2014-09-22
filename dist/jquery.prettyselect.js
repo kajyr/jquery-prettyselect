@@ -46,6 +46,7 @@
         wrapClass: 'prettyselect-wrap',
         labelClass: 'prettyselect-label',
         dropClass: 'prettyselect-drop',
+        disabledClass: 'prettyselect-disabled',
         onlyValuedOptions: false
       };
 
@@ -68,6 +69,9 @@
             return labelText = $select.find('option:selected').text();
           }
         },
+        isDisabled: function($select) {
+          return $select.attr('disabled') === 'disabled';
+        },
         optionsSelector: {
           onlyWithValue: 'option[value][value!=""]:not([data-placeholder])',
           withoutValue: 'option:not([data-placeholder])'
@@ -87,6 +91,9 @@
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         $wrap.attr('data-prettyselect-elements', $options.length).append($label).append($drop).on('click', 'li', (function(_this) {
           return function(e) {
+            if (_this.privates.isDisabled(_this.$select)) {
+              return;
+            }
             return _this.$select.val($(e.target).attr('data-value')).trigger('change');
           };
         })(this));
@@ -98,16 +105,18 @@
             return $label.html(label);
           };
         })(this));
-        $label.on('click', function(e) {
-          if ($drop.is(':visible')) {
-            return;
-          }
-          e.stopPropagation();
-          $drop.show();
-          return $('html').one('click', function() {
-            return $drop.hide();
-          });
-        });
+        $label.on('click', (function(_this) {
+          return function(e) {
+            if ($drop.is(':visible') || _this.privates.isDisabled(_this.$select)) {
+              return;
+            }
+            e.stopPropagation();
+            $drop.show();
+            return $('html').one('click', function() {
+              return $drop.hide();
+            });
+          };
+        })(this));
         MutationObserver = window.MutationObserver;
         this.observer = new MutationObserver((function(_this) {
           return function(mutations, observer) {
@@ -132,6 +141,14 @@
         $ul.detach();
         this.$select.show().unwrap(this.options.wrapClass);
         return this.$select.removeData('PrettySelect');
+      };
+
+      PrettySelect.prototype.disable = function() {
+        return this.$select.attr('disabled', 'disabled').parents('.' + this.options.wrapClass).addClass(this.options.disabledClass);
+      };
+
+      PrettySelect.prototype.enable = function() {
+        return this.$select.removeAttr('disabled', 'disabled').parents('.' + this.options.wrapClass).removeClass(this.options.disabledClass);
       };
 
       return PrettySelect;

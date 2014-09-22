@@ -24,9 +24,9 @@
 		
 		$elem.trigger('click');
 
-		ok($select.val() === value, 'Clicking on an interface element changes select value');
+		equal($select.val(),value, 'Clicking on an interface element changes select value');
 
-		ok($label.text() === $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
+		equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
 		equal($select2.val(), value2, "The secondary select value should not be changed");
 
@@ -44,7 +44,35 @@
 
 		$elem.trigger('click');
 
-		ok($select.val() === value, 'Clicking on an interface element changes select value');
+		equal($select.val(), value, 'Clicking on an interface element changes select value');
+
+	});
+
+	test("clicks on disabled prettyselect", function() {
+
+		var $select = $('select#basic').prettyselect();
+
+		$select.prettyselect('disable');
+
+		var $wrap = $select.parents('.prettyselect-wrap');
+		var $elem = $wrap.find('ul li:last-child');
+
+		var oldValue = $select.val();
+		var elemntValue = $elem.attr('data-value');
+
+		$elem.trigger('click');
+
+		notEqual($select.val(), elemntValue, 'Clicking on an disabled interface element should not change selected value');
+		equal($select.val(), oldValue, 'Clicking on an disabled interface element should leave the old value intact');
+		ok($wrap.hasClass('prettyselect-disabled'), 'The wrap element should have the disabled class');
+
+		$select.prettyselect('enable');
+
+		$elem.trigger('click');
+
+		equal($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
+		notEqual($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
+		ok(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
 
 	});
 
