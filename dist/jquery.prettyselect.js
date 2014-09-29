@@ -94,7 +94,7 @@
             if (_this.privates.isDisabled(_this.$select)) {
               return;
             }
-            return _this.$select.val($(e.target).attr('data-value')).trigger('change');
+            return _this.$select.val($(e.currentTarget).attr('data-value')).trigger('change');
           };
         })(this));
         this.$select.on('change', (function(_this) {

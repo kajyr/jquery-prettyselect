@@ -2,9 +2,9 @@
   "name": "jquery-prettyselect",
   "title": "jquery-prettyselect",
   "description": "Makes select elements pretty.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
-    "name": "Carlo",
+    "name": "Carlo 'kj'",
     "email": "carlo.panzi@gmail.com",
     "url": "http://kajyr.github.io"
   },

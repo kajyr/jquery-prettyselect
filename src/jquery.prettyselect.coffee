@@ -58,7 +58,7 @@
 				.on('click', 'li', (e) =>
 					return if @privates.isDisabled(@$select)
 					@$select
-						.val $(e.target).attr('data-value')
+						.val $(e.currentTarget).attr('data-value')
 						.trigger 'change'
 			)
 

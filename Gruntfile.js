@@ -11,6 +11,11 @@ module.exports = function(grunt) {
 			},
 		},
 		uglify: {
+			options: {
+				banner: '/*\n<%= pkg.name %> - v<%= pkg.version %>\n' +
+				'<%= pkg.author.name %>\n' +
+				'<%= grunt.template.today("yyyy-mm-dd") %>\n*/\n'
+			}, 
 			my_target: {
 				files: {
 					'dist/jquery.prettyselect.min.js': ['dist/jquery.prettyselect.js'],
