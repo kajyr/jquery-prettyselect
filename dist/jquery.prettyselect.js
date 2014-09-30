@@ -61,12 +61,11 @@
           });
           return elements;
         },
-        getLabel: function($select) {
-          var labelText;
+        getInitialLabel: function($select) {
           if ($select.find('option[data-placeholder]').length > 0) {
-            return labelText = $select.find('option[data-placeholder]').text();
+            return $select.find('option[data-placeholder]').html();
           } else {
-            return labelText = $select.find('option:selected').text();
+            return $select.find('option:selected').html();
           }
         },
         isDisabled: function($select) {
@@ -85,7 +84,7 @@
         this.$select = $(select);
         this.$select.hide().wrap("<div class=" + this.options.wrapClass + "/>");
         $wrap = this.$select.parents('.' + this.options.wrapClass);
-        $label = $("<div class=" + this.options.labelClass + "/>").html(this.privates.getLabel(this.$select));
+        $label = $("<div class=" + this.options.labelClass + "/>").html(this.privates.getInitialLabel(this.$select));
         $options = this.$select.find(this.options.optionsSelector);
         elements = this.privates.populate($options);
         $drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
@@ -99,9 +98,8 @@
         })(this));
         this.$select.on('change', (function(_this) {
           return function(e) {
-            var label, val;
-            val = _this.$select.val();
-            label = _this.$select.find("option[value = '" + val + "']").html();
+            var label;
+            label = _this.$select.find('option:selected').html();
             return $label.html(label);
           };
         })(this));

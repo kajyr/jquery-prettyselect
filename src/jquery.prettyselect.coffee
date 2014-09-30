@@ -18,11 +18,12 @@
 					elements += "<li data-value='#{$option.attr('value')}'>#{$option.html()}</li>"
 				);
 				return elements;
-			getLabel: ($select) ->
+			getInitialLabel: ($select) ->
 				if $select.find('option[data-placeholder]').length > 0
-					labelText = $select.find('option[data-placeholder]').text()
+					$select.find('option[data-placeholder]').html()
 				else
-					labelText = $select.find('option:selected').text()
+					$select.find('option:selected').html()
+
 			isDisabled: ($select) ->
 				$select.attr('disabled') == 'disabled'
 
@@ -42,7 +43,7 @@
 			$wrap = @$select.parents('.' + @options.wrapClass)
 
 			$label = $("<div class=#{@options.labelClass}/>").html(
-				@privates.getLabel(@$select)
+				@privates.getInitialLabel(@$select)
 			)
 
 			$options = @$select.find(@options.optionsSelector)
@@ -63,10 +64,9 @@
 			)
 
 			@$select.on('change', (e) =>
-				val = @$select.val()
-				label = @$select.find("option[value = '#{val}']").html()
-				$label.html(label);
-			);
+				label = @$select.find('option:selected').html()
+				$label.html(label)
+			)
 
 			$label.on('click', (e) => 
 				return if $drop.is(':visible') or @privates.isDisabled(@$select)
@@ -78,8 +78,8 @@
 				
 					$drop.hide()
 
-				);	
-			);
+				)
+			)
 
 			MutationObserver = window.MutationObserver;
 			@observer = new MutationObserver( (mutations, observer) =>
@@ -89,7 +89,7 @@
 				@$select.parents(".#{@options.wrapClass}")
 					.attr('data-prettyselect-elements', $options.length)
 					.find(".#{@options.dropClass}").html(@privates.populate($options))
-			);
+			)
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
 		destroy: () ->
