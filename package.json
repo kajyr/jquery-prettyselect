@@ -2,9 +2,9 @@
   "name": "jquery-prettyselect",
   "title": "jquery-prettyselect",
   "description": "Makes select elements pretty.",
-  "version": "1.1.1",
+  "version": "1.2.2",
   "author": {
-    "name": "Carlo",
+    "name": "Carlo 'kj'",
     "email": "carlo.panzi@gmail.com",
     "url": "http://kajyr.github.io"
   },
@@ -30,7 +30,9 @@
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-qunit": "^0.4.0",
     "grunt-contrib-coffee": "^0.10.1",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-release": "~0.7.0"
   },
   "dependencies": {
     "jquery": ">=1.8"

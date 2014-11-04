@@ -50,7 +50,32 @@ It is possible to specify one of the ```<option>``` elements as the ```placehold
 </select>
 ```
 
+### Disabling
+
+After instantiation, it is possible to disable the select with the 'disable' command. The clicks on this element shoud not trigger changes
+
+```javascript
+$('select').prettyselect('disable');
+```
+
+To undo disabling, there's the enable command
+
+```javascript
+$('select').prettyselect('enable');
+```
+
 ## Updates
+
+### [1.2](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.2.0)
+Added the disabled method
+			
+### 1.1.4
+Fixed bug where json objects are used as option's value
+```html
+<option value="{&quot;id&quot;: &quot;23&quot;, &quot;text&quot;:&quot;鄂州市&quot;}">鄂州市</option>
+```
+
+### 1.1.3
 - Added ```onlyValuedOptions``` option
 - Added ```data-prettyselect-elements``` to the wrapper to expose the counter of option elements in the select
 - Automatically detects change in the native select options (and rebuild the DOM), using MutationObservers or a dirty polyfill

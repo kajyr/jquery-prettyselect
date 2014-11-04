@@ -7,6 +7,7 @@
 			wrapClass: 'prettyselect-wrap'
 			labelClass: 'prettyselect-label'
 			dropClass: 'prettyselect-drop'
+			disabledClass: 'prettyselect-disabled'
 			onlyValuedOptions: false
 
 		privates:
@@ -14,15 +15,18 @@
 				elements = '';
 				$options.each( () ->
 					$option = $(this)
-					elements += "<li data-value=#{$option.attr('value')}>#{$option.html()}</li>"
+					elements += "<li data-value='#{$option.attr('value')}'>#{$option.html()}</li>"
 				);
 				return elements;
-			getLabel: ($select) ->
+			getInitialLabel: ($select) ->
 				if $select.find('option[data-placeholder]').length > 0
-					labelText = $select.find('option[data-placeholder]').text()
+					$select.find('option[data-placeholder]').html()
 				else
-					labelText = $select.find('option:selected').text()
-					
+					$select.find('option:selected').html()
+
+			isDisabled: ($select) ->
+				$select.attr('disabled') == 'disabled'
+
 			optionsSelector:
 				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
 				withoutValue: 'option:not([data-placeholder])'
@@ -39,7 +43,7 @@
 			$wrap = @$select.parents('.' + @options.wrapClass)
 
 			$label = $("<div class=#{@options.labelClass}/>").html(
-				@privates.getLabel(@$select)
+				@privates.getInitialLabel(@$select)
 			)
 
 			$options = @$select.find(@options.optionsSelector)
@@ -53,19 +57,19 @@
 				.append($label)
 				.append($drop)
 				.on('click', 'li', (e) =>
+					return if @privates.isDisabled(@$select)
 					@$select
-						.val $(e.target).data('value')
+						.val $(e.currentTarget).attr('data-value')
 						.trigger 'change'
 			)
 
 			@$select.on('change', (e) =>
-				val = @$select.val()
-				label = @$select.find("option[value = '#{val}']").html()
-				$label.html(label);
-			);
+				label = @$select.find('option:selected').html()
+				$label.html(label)
+			)
 
-			$label.on('click', (e) -> 
-				return if $drop.is(':visible')
+			$label.on('click', (e) => 
+				return if $drop.is(':visible') or @privates.isDisabled(@$select)
 				e.stopPropagation()
 
 				$drop.show()
@@ -74,8 +78,8 @@
 				
 					$drop.hide()
 
-				);	
-			);
+				)
+			)
 
 			MutationObserver = window.MutationObserver;
 			@observer = new MutationObserver( (mutations, observer) =>
@@ -85,26 +89,35 @@
 				@$select.parents(".#{@options.wrapClass}")
 					.attr('data-prettyselect-elements', $options.length)
 					.find(".#{@options.dropClass}").html(@privates.populate($options))
-			);
+			)
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
-
- 
-		# Additional plugin methods go here
 		destroy: () ->
-			$wrap = @$select.parents('.' + @options.wrapClass);
-			$label = $wrap.find('.' + @options.labelClass);
-			$ul = $wrap.find('.' + @options.dropClass);
+			$wrap = @$select.parents('.' + @options.wrapClass)
+			$label = $wrap.find('.' + @options.labelClass)
+			$ul = $wrap.find('.' + @options.dropClass)
 			@observer.disconnect()
 
-			$label.detach();
-			$ul.detach();
+			$label.detach()
+			$ul.detach()
 
 			@$select
 				.show()
-				.unwrap(@options.wrapClass);
+				.unwrap(@options.wrapClass)
 
 			@$select.removeData 'PrettySelect'
+
+		disable: () ->
+			@$select
+				.attr('disabled', 'disabled')
+				.parents('.' + @options.wrapClass)
+				.addClass(@options.disabledClass)
+
+		enable: () ->
+			@$select
+				.removeAttr('disabled', 'disabled')
+				.parents('.' + @options.wrapClass)
+				.removeClass(@options.disabledClass)
  
 	# Define the plugin
 	$.fn.extend prettyselect: (option, args...) ->
