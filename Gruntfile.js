@@ -14,7 +14,8 @@ module.exports = function(grunt) {
 			options: {
 				banner: '/*\n<%= pkg.name %> - v<%= pkg.version %>\n' +
 				'<%= pkg.author.name %>\n' +
-				'<%= grunt.template.today("yyyy-mm-dd") %>\n*/\n'
+				'<%= grunt.template.today("yyyy-mm-dd") %>\n*/\n',
+				beautify: false
 			}, 
 			my_target: {
 				files: {
