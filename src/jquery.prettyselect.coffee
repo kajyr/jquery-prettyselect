@@ -56,7 +56,7 @@
 
 			@$select.on('change', (e) =>
 				val = @$select.val()
-				@$label.html( @$select.find("option[value = '#{val}']").html() );
+				@$label.html( @$select.find("option[value = '#{val}']").html() )
 			)
 
 			@$label.on('click', (e) => 
@@ -70,14 +70,16 @@
 				)
 			)
 
-			MutationObserver = window.MutationObserver;
-			@observer = new MutationObserver( (mutations, observer) =>
+			MutationObserver = window.MutationObserver
 
+			@observer = new MutationObserver( (mutations, observer) =>
 				$options = @$select.find(@options.optionsSelector)
-				
+
 				@$wrap.attr('data-prettyselect-elements', $options.length)
-				@$drop.html(@privates.populate($options))
-			);
+
+				@$drop.html @privates.populate($options)
+			)
+
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
 
 		destroy: () ->
