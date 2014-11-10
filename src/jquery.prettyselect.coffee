@@ -1,6 +1,4 @@
 (($) ->
-
-	# Define the plugin class
 	class PrettySelect
  
 		defaults:
