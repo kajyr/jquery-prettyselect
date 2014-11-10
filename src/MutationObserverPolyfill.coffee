@@ -2,8 +2,7 @@ return if window.MutationObserver?
 
 class MutationObserver
 
-	constructor: (callBack) ->
-		@callBack = callBack
+	constructor: (@callBack) ->
 
 	observe: (element, options) ->
 		@element = element
@@ -18,7 +17,7 @@ class MutationObserver
 		, 200
 	,
 	disconnect: () ->
-		window.clearInterval(@interval)
+		clearInterval(@interval)
 
 
 window.MutationObserver = MutationObserver
