@@ -8,7 +8,8 @@
 			disabledClass: 'prettyselect-disabled'
 			onlyValuedOptions: false
 
-		privates:
+		#privates
+		_:
 			populate: ($options) ->
 				return $options.map( () ->
 					"<li data-value='#{$(this).attr('value')}'>#{$(this).html()}</li>"
@@ -17,26 +18,26 @@
 			optionsSelector:
 				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
 				withoutValue: 'option:not([data-placeholder])'
- 
+ 		#public
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
 
-			@options.optionsSelector = if @options.onlyValuedOptions then @privates.optionsSelector.onlyWithValue else @privates.optionsSelector.withoutValue
+			@options.optionsSelector = if @options.onlyValuedOptions then @_.optionsSelector.onlyWithValue else @_.optionsSelector.withoutValue
 
 			@$select = $(select)
 				.hide()
 				.wrap("<div class=#{@options.wrapClass}/>")
 
 			@$label = $("<div class=#{@options.labelClass}/>").html(
-				if @$select.find('option[data-placeholder]').length > 0
-					@$select.find('option[data-placeholder]').text()
+				if ($pl = @$select.find('option[data-placeholder]')).length > 0
+					$pl.text()
 				else
 					@$select.find('option:selected').text()
 			)
 
 			$options = @$select.find(@options.optionsSelector)
 
-			elements = @privates.populate($options)
+			elements = @_.populate($options)
 
 			@$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
 				.hide()
@@ -75,7 +76,7 @@
 
 				@$wrap.attr('data-prettyselect-elements', $options.length)
 
-				@$drop.html @privates.populate($options)
+				@$drop.html @_.populate($options)
 			)
 
 			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })

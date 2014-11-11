@@ -50,7 +50,7 @@
         onlyValuedOptions: false
       };
 
-      PrettySelect.prototype.privates = {
+      PrettySelect.prototype._ = {
         populate: function($options) {
           return $options.map(function() {
             return "<li data-value='" + ($(this).attr('value')) + "'>" + ($(this).html()) + "</li>";
@@ -63,13 +63,13 @@
       };
 
       function PrettySelect(select, options) {
-        var $options, MutationObserver, elements;
+        var $options, $pl, MutationObserver, elements;
         this.options = $.extend({}, this.defaults, options);
-        this.options.optionsSelector = this.options.onlyValuedOptions ? this.privates.optionsSelector.onlyWithValue : this.privates.optionsSelector.withoutValue;
+        this.options.optionsSelector = this.options.onlyValuedOptions ? this._.optionsSelector.onlyWithValue : this._.optionsSelector.withoutValue;
         this.$select = $(select).hide().wrap("<div class=" + this.options.wrapClass + "/>");
-        this.$label = $("<div class=" + this.options.labelClass + "/>").html(this.$select.find('option[data-placeholder]').length > 0 ? this.$select.find('option[data-placeholder]').text() : this.$select.find('option:selected').text());
+        this.$label = $("<div class=" + this.options.labelClass + "/>").html(($pl = this.$select.find('option[data-placeholder]')).length > 0 ? $pl.text() : this.$select.find('option:selected').text());
         $options = this.$select.find(this.options.optionsSelector);
-        elements = this.privates.populate($options);
+        elements = this._.populate($options);
         this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
@@ -103,7 +103,7 @@
           return function(mutations, observer) {
             $options = _this.$select.find(_this.options.optionsSelector);
             _this.$wrap.attr('data-prettyselect-elements', $options.length);
-            return _this.$drop.html(_this.privates.populate($options));
+            return _this.$drop.html(_this._.populate($options));
           };
         })(this));
         this.observer.observe(this.$select[0], {
