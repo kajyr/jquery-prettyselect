@@ -66,8 +66,10 @@ $('select').prettyselect('enable');
 
 ## Updates
 
-### [1.2](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.2.0)
-Added the disabled method
+### [1.2](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.2.4)
++ Added the disabled method
++ size optimizations
++ triggered native change event to better integrate with other frameworks.
 			
 ### 1.1.4
 Fixed bug where json objects are used as option's value
