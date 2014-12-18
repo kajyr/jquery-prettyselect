@@ -59,6 +59,16 @@
         optionsSelector: {
           onlyWithValue: 'option[value][value!=""]:not([data-placeholder])',
           withoutValue: 'option:not([data-placeholder])'
+        },
+        trigger: function(element, eventName) {
+          var evt;
+          if (typeof document['createEvent'] === 'function') {
+            evt = document.createEvent("HTMLEvents");
+            evt.initEvent(eventName, false, true);
+            return element.dispatchEvent(evt);
+          } else {
+            return element.fireEvent("on" + eventName);
+          }
         }
       };
 
@@ -76,7 +86,8 @@
             if (_this.isDisabled()) {
               return;
             }
-            return _this.$select.val($(e.currentTarget).attr('data-value')).trigger('change');
+            _this.$select.val($(e.currentTarget).attr('data-value'));
+            return _this._.trigger(_this.$select[0], 'change');
           };
         })(this));
         this.$select.on('change', (function(_this) {
