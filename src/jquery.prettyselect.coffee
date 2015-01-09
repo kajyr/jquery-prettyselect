@@ -26,6 +26,7 @@
 					element.dispatchEvent(evt)
 				else
 					element.fireEvent("on#{eventName}")
+				return element
 
 
  		#public

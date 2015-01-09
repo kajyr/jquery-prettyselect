@@ -65,10 +65,11 @@
           if (typeof document['createEvent'] === 'function') {
             evt = document.createEvent("HTMLEvents");
             evt.initEvent(eventName, false, true);
-            return element.dispatchEvent(evt);
+            element.dispatchEvent(evt);
           } else {
-            return element.fireEvent("on" + eventName);
+            element.fireEvent("on" + eventName);
           }
+          return element;
         }
       };
 
