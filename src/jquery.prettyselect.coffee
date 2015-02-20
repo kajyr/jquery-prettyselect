@@ -12,7 +12,8 @@
 		_:
 			populate: ($options) ->
 				return $options.map( () ->
-					"<li data-value='#{$(this).attr('value')}'>#{$(this).html()}</li>"
+					val = escape $(this).attr('value')
+					"<li data-value='#{val}'>#{$(this).html()}</li>"
 				).toArray().join('')
 
 			optionsSelector:
@@ -59,12 +60,13 @@
 				.append(@$drop)
 				.on('click', 'li', (e) =>
 					return if @isDisabled()
-					@$select.val $(e.currentTarget).attr('data-value')
+					value = unescape $(e.currentTarget).attr('data-value')
+					@$select.val(value)
 					@_.trigger(@$select[0], 'change')
 				)
 
 			@$select.on('change', (e) =>
-				val = @$select.val()
+				val = @$select.val().replace("'", "\\'")
 				@$label.html( @$select.find("option[value = '#{val}']").html() )
 			)
 

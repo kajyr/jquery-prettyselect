@@ -18,13 +18,13 @@
 
 		//clicco su un elemento
 		var $elem = $wrap.find('ul li:last-child');
-		var value = $elem.data('value').toString();
+		var value = unescape($elem.data('value').toString());
 
 		var value2 = $select2.val();
 		
 		$elem.trigger('click');
 
-		equal($select.val(),value, 'Clicking on an interface element changes select value');
+		equal($select.val(), value, 'Clicking on an interface element changes select value');
 
 		equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
@@ -40,7 +40,21 @@
 		var $wrap = $select.parents('.prettyselect-wrap');
 		var $elem = $wrap.find('ul li:last-child');
 
-		var value = $elem.attr('data-value');
+		var value = unescape($elem.attr('data-value'));
+
+		$elem.trigger('click');
+
+		equal($select.val(), value, 'Clicking on an interface element changes select value');
+
+	});
+
+	test("interface: clicks on values with single quotes", function() {
+
+		var $select = $('select#third').prettyselect();
+		var $wrap = $select.parents('.prettyselect-wrap');
+		var $elem = $wrap.find('ul li:last-child');
+
+		var value = unescape($elem.attr('data-value'));
 
 		$elem.trigger('click');
 
@@ -58,7 +72,7 @@
 		var $elem = $wrap.find('ul li:last-child');
 
 		var oldValue = $select.val();
-		var elemntValue = $elem.attr('data-value');
+		var elemntValue = unescape($elem.attr('data-value'));
 
 		$elem.trigger('click');
 

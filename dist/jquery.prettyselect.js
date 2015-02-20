@@ -53,7 +53,9 @@
       PrettySelect.prototype._ = {
         populate: function($options) {
           return $options.map(function() {
-            return "<li data-value='" + ($(this).attr('value')) + "'>" + ($(this).html()) + "</li>";
+            var val;
+            val = escape($(this).attr('value'));
+            return "<li data-value='" + val + "'>" + ($(this).html()) + "</li>";
           }).toArray().join('');
         },
         optionsSelector: {
@@ -84,17 +86,19 @@
         this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
+            var value;
             if (_this.isDisabled()) {
               return;
             }
-            _this.$select.val($(e.currentTarget).attr('data-value'));
+            value = unescape($(e.currentTarget).attr('data-value'));
+            _this.$select.val(value);
             return _this._.trigger(_this.$select[0], 'change');
           };
         })(this));
         this.$select.on('change', (function(_this) {
           return function(e) {
             var val;
-            val = _this.$select.val();
+            val = _this.$select.val().replace("'", "\\'");
             return _this.$label.html(_this.$select.find("option[value = '" + val + "']").html());
           };
         })(this));
