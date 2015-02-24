@@ -61,17 +61,6 @@
         optionsSelector: {
           onlyWithValue: 'option[value][value!=""]:not([data-placeholder])',
           withoutValue: 'option:not([data-placeholder])'
-        },
-        trigger: function(element, eventName) {
-          var evt;
-          if (typeof document['createEvent'] === 'function') {
-            evt = document.createEvent("HTMLEvents");
-            evt.initEvent(eventName, false, true);
-            element.dispatchEvent(evt);
-          } else {
-            element.fireEvent("on" + eventName);
-          }
-          return element;
         }
       };
 
@@ -91,8 +80,7 @@
               return;
             }
             value = unescape($(e.currentTarget).attr('data-value'));
-            _this.$select.val(value);
-            return _this._.trigger(_this.$select[0], 'change');
+            return _this.$select.val(value).trigger('change');
           };
         })(this));
         this.$select.on('change', (function(_this) {

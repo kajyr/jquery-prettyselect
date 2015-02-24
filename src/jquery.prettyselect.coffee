@@ -20,16 +20,6 @@
 				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
 				withoutValue: 'option:not([data-placeholder])'
 
-			trigger: (element, eventName) ->
-				if typeof document['createEvent'] == 'function'
-					evt = document.createEvent("HTMLEvents")
-					evt.initEvent(eventName, false, true)
-					element.dispatchEvent(evt)
-				else
-					element.fireEvent("on#{eventName}")
-				return element
-
-
  		#public
 		constructor: (select, options) ->
 			@options = $.extend({}, @defaults, options)
@@ -61,8 +51,9 @@
 				.on('click', 'li', (e) =>
 					return if @isDisabled()
 					value = unescape $(e.currentTarget).attr('data-value')
-					@$select.val(value)
-					@_.trigger(@$select[0], 'change')
+					@$select
+						.val(value)
+						.trigger('change')
 				)
 
 			@$select.on('change', (e) =>
