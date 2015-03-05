@@ -75,11 +75,15 @@
         this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
-            var value;
+            var oldVal, value;
             if (_this.isDisabled()) {
               return;
             }
             value = unescape($(e.currentTarget).attr('data-value'));
+            oldVal = _this.$select.val();
+            if (oldVal === value) {
+              return;
+            }
             return _this.$select.val(value).trigger('change');
           };
         })(this));

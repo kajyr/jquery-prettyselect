@@ -51,6 +51,9 @@
 				.on('click', 'li', (e) =>
 					return if @isDisabled()
 					value = unescape $(e.currentTarget).attr('data-value')
+					oldVal = @$select.val()
+					return if oldVal == value
+					
 					@$select
 						.val(value)
 						.trigger('change')
