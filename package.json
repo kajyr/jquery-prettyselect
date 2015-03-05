@@ -32,7 +32,8 @@
     "grunt-contrib-coffee": "^0.10.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-release": "~0.7.0"
+    "grunt-release": "~0.7.0",
+    "qunitjs": "~1.17.1"
   },
   "dependencies": {
     "jquery": ">=1.8"
