@@ -4,7 +4,7 @@
 
 (function($) {
 
-	QUnit.test("interface: clicks", function() {
+	QUnit.test("interface: clicks", function( assert ) {
 
 		var $select = $('select#basic').prettyselect();
 		var $select2 = $('select#secondary').prettyselect();
@@ -24,17 +24,17 @@
 		
 		$elem.trigger('click');
 
-		equal($select.val(), value, 'Clicking on an interface element changes select value');
+		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
 
-		equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
+		assert.equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
-		equal($select2.val(), value2, "The secondary select value should not be changed");
+		assert.equal($select2.val(), value2, "The secondary select value should not be changed");
 
 		$select.prettyselect('destroy');
 		$select2.prettyselect('destroy');
 	});
 
-	QUnit.test("interface: clicks on nasty values", function() {
+	QUnit.test("interface: clicks on nasty values", function( assert ) {
 
 		var $select = $('select#nasty').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -44,11 +44,11 @@
 
 		$elem.trigger('click');
 
-		equal($select.val(), value, 'Clicking on an interface element changes select value');
+		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
 
 	});
 
-	QUnit.test("interface: clicks on values with single quotes", function() {
+	QUnit.test("interface: clicks on values with single quotes", function( assert ) {
 
 		var $select = $('select#third').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -58,11 +58,11 @@
 
 		$elem.trigger('click');
 
-		equal($select.val(), value, 'Clicking on an interface element changes select value');
+		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
 
 	});
 
-	QUnit.test("clicks on disabled prettyselect", function() {
+	QUnit.test("clicks on disabled prettyselect", function(assert ) {
 
 		var $select = $('select#basic').prettyselect();
 
@@ -76,17 +76,17 @@
 
 		$elem.trigger('click');
 
-		notEqual($select.val(), elemntValue, 'Clicking on an disabled interface element should not change selected value');
-		equal($select.val(), oldValue, 'Clicking on an disabled interface element should leave the old value intact');
-		ok($wrap.hasClass('prettyselect-disabled'), 'The wrap element should have the disabled class');
+		assert.notEqual($select.val(), elemntValue, 'Clicking on an disabled interface element should not change selected value');
+		assert.equal($select.val(), oldValue, 'Clicking on an disabled interface element should leave the old value intact');
+		assert.ok($wrap.hasClass('prettyselect-disabled'), 'The wrap element should have the disabled class');
 
 		$select.prettyselect('enable');
 
 		$elem.trigger('click');
 
-		equal($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
-		notEqual($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
-		ok(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
+		assert.equal($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
+		assert.notEqual($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
+		assert.ok(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
 
 	});
 
@@ -110,13 +110,13 @@
 
 		setTimeout(function() {
 
-			equal(changeCount, 1, 'Clicking on an element should raise the counter');
+			assert.equal(changeCount, 1, 'Clicking on an element should raise the counter');
 			
 			$elem.trigger('click');
 
 			setTimeout(function() {
 
-				equal(changeCount, 1, 'Clicking on the already selected element should not raise the counter');
+				assert.equal(changeCount, 1, 'Clicking on the already selected element should not raise the counter');
 
 				done();
 

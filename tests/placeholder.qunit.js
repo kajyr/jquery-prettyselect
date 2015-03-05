@@ -4,7 +4,7 @@
 
 (function($) {
 
-	QUnit.test("Placeholder", function() {
+	QUnit.test("Placeholder", function( assert ) {
 
 		
 		var $select = $('select#basic').prettyselect();
@@ -20,14 +20,14 @@
 			return $(this).html() == placeholderText;
 		});
 
-		equal($li.length, 0, "There should be no elements with the same text as the placeholder");
+		assert.equal($li.length, 0, "There should be no elements with the same text as the placeholder");
 
 
 		// 
 
 		var label = $parent.find('.prettyselect-label').html();
 
-		equal(label, placeholderText, "La label della select deve essere uguale al placeholder");
+		assert.equal(label, placeholderText, "La label della select deve essere uguale al placeholder");
 		
 	});
 

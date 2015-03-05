@@ -4,7 +4,7 @@
 
 (function($) {
 
-	QUnit.test("interface: open and close", function() {
+	QUnit.test("interface: open and close", function(assert) {
 
 		
 		var $selectOne = $('select#basic').prettyselect();
@@ -13,7 +13,7 @@
 		var $parentOne = $selectOne.parents('.prettyselect-wrap');
 		var $parentTwo = $selectTwo.parents('.prettyselect-wrap');
 
-		notStrictEqual($parentOne[0], $parentTwo[0], 'Each select has own wrap');
+		assert.notStrictEqual($parentOne[0], $parentTwo[0], 'Each select has own wrap');
 
 		
 	});

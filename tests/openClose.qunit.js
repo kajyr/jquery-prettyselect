@@ -4,7 +4,7 @@
 
 (function($) {
 
-	QUnit.test("interface: open and close", function() {
+	QUnit.test("interface: open and close", function( assert ) {
 
 		var $select = $('select#basic').prettyselect();
 		var $selectTwo = $('select#secondary').prettyselect();
@@ -17,25 +17,25 @@
 		var $drop2 = $wrap2.find('ul');
 		var $label2 = $wrap2.find('.prettyselect-label');
 
-		ok($drop.is(':hidden'), 'The drop element is initially hidden');
-		ok($drop2.is(':hidden'), 'Also the second select drop is hidden');
+		assert.ok($drop.is(':hidden'), 'The drop element is initially hidden');
+		assert.ok($drop2.is(':hidden'), 'Also the second select drop is hidden');
 
 		$label.trigger('click');
 
-		ok($drop.is(':visible'), 'After a click the drop element is visible');
-		ok($drop2.is(':hidden'), 'But the second select drop is still hidden');
+		assert.ok($drop.is(':visible'), 'After a click the drop element is visible');
+		assert.ok($drop2.is(':hidden'), 'But the second select drop is still hidden');
 
 		$('body').trigger('click');
 
-		ok($drop.is(':hidden'), 'After clicking on another element the drop is hidden');
-		ok($drop2.is(':hidden'), 'Aaand the second select drop is still hidden');
+		assert.ok($drop.is(':hidden'), 'After clicking on another element the drop is hidden');
+		assert.ok($drop2.is(':hidden'), 'Aaand the second select drop is still hidden');
 
 		$select.prettyselect('destroy');
 		$selectTwo.prettyselect('destroy');
 	
 	});
 
-	QUnit.test("open-close on disabled prettyselect", function() {
+	QUnit.test("open-close on disabled prettyselect", function( assert ) {
 
 		var $select = $('select#basic').prettyselect();
 
@@ -47,13 +47,13 @@
 
 		$label.trigger('click');
 
-		ok($drop.is(':hidden'), 'Clicking on a disabled select does not open the drop');
+		assert.ok($drop.is(':hidden'), 'Clicking on a disabled select does not open the drop');
 
 		$select.prettyselect('enable');
 
 		$label.trigger('click');
 
-		ok($drop.is(':visible'), 'Clicking on a disabled select does not open the drop');
+		assert.ok($drop.is(':visible'), 'Clicking on a disabled select does not open the drop');
 	});
 
 

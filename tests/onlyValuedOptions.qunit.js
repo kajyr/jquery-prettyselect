@@ -4,12 +4,12 @@
 
 (function($) {
 
-	QUnit.test("basic: instantiation", function() {
+	QUnit.test("basic: instantiation", function( assert ) {
 
 		var $select = $('select#third').prettyselect();
 		$wrap = $select.parents('.prettyselect-wrap');
 
-		equal($wrap.attr('data-prettyselect-elements'), 5, 'Senza opzione onlyValuedOptions mi aspetto 5 elementi');
+		assert.equal($wrap.attr('data-prettyselect-elements'), 5, 'Senza opzione onlyValuedOptions mi aspetto 5 elementi');
 		
 		$select.prettyselect('destroy');
 
@@ -17,7 +17,7 @@
 			onlyValuedOptions: true
 		});
 		$wrap = $select.parents('.prettyselect-wrap');
-		equal($wrap.attr('data-prettyselect-elements'), 4, 'Con l\'opzione onlyValuedOptions mi aspetto 4 elementi');
+		assert.equal($wrap.attr('data-prettyselect-elements'), 4, 'Con l\'opzione onlyValuedOptions mi aspetto 4 elementi');
 
 
 

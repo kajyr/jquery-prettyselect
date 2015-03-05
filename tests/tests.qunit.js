@@ -5,7 +5,9 @@
 (function($) {
 
 
-	asyncTest("mutations: changing options", function() {
+	QUnit.test("mutations: changing options", function( assert ) {
+
+		var done = assert.async();
 
 		var $select = $('select#basic').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -22,8 +24,8 @@
 			
 			$select.prettyselect('destroy');
 
-			start();
-		}, 500);
+			done();
+		}, 300);
 	});
 
 }(jQuery));

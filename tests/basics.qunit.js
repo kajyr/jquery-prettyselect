@@ -4,24 +4,24 @@
 
 (function($) {
 
-	QUnit.test("basic: instantiation", function() {
+	QUnit.test("basic: instantiation", function( assert ) {
 		var $select = $('select#basic').prettyselect();
 
-		equal($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');
+		assert.equal($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');
 
 		$select.prettyselect();
 
-		equal($('.prettyselect-wrap').length, 1, 'If called another time, it does nothing');
+		assert.equal($('.prettyselect-wrap').length, 1, 'If called another time, it does nothing');
 
 		$select.prettyselect('destroy');
 
-		equal($select.parents('.prettyselect-wrap').length, 0, 'It can be destroyed');
+		assert.equal($select.parents('.prettyselect-wrap').length, 0, 'It can be destroyed');
 
-		equal($select.data('PrettySelect'), undefined, 'There should be no left data elements')
+		assert.equal($select.data('PrettySelect'), undefined, 'There should be no left data elements')
 
 		$select.prettyselect();
 
-		equal($select.parents('.prettyselect-wrap').length, 1, 'Can be reinstantiated');
+		assert.equal($select.parents('.prettyselect-wrap').length, 1, 'Can be reinstantiated');
 
 		$select.prettyselect('destroy');
 	});
