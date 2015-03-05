@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("interface: open and close", function() {
+	QUnit.test("interface: open and close", function() {
 
 		
 		var $selectOne = $('select#basic').prettyselect();

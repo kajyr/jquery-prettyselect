@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("interface: open and close", function() {
+	QUnit.test("interface: open and close", function() {
 
 		var $select = $('select#basic').prettyselect();
 		var $selectTwo = $('select#secondary').prettyselect();
@@ -35,7 +35,7 @@
 	
 	});
 
-	test("open-close on disabled prettyselect", function() {
+	QUnit.test("open-close on disabled prettyselect", function() {
 
 		var $select = $('select#basic').prettyselect();
 

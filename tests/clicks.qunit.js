@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("interface: clicks", function() {
+	QUnit.test("interface: clicks", function() {
 
 		var $select = $('select#basic').prettyselect();
 		var $select2 = $('select#secondary').prettyselect();
@@ -34,7 +34,7 @@
 		$select2.prettyselect('destroy');
 	});
 
-	test("interface: clicks on nasty values", function() {
+	QUnit.test("interface: clicks on nasty values", function() {
 
 		var $select = $('select#nasty').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -48,7 +48,7 @@
 
 	});
 
-	test("interface: clicks on values with single quotes", function() {
+	QUnit.test("interface: clicks on values with single quotes", function() {
 
 		var $select = $('select#third').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -62,7 +62,7 @@
 
 	});
 
-	test("clicks on disabled prettyselect", function() {
+	QUnit.test("clicks on disabled prettyselect", function() {
 
 		var $select = $('select#basic').prettyselect();
 
@@ -87,6 +87,43 @@
 		equal($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
 		notEqual($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
 		ok(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
+
+	});
+
+
+	QUnit.test("multiple clicks on the same element", function( assert ) {
+
+		var done = assert.async();
+
+		var $select = $('select#basic').prettyselect();
+
+		var $wrap = $select.parents('.prettyselect-wrap');
+		var $elem = $wrap.find('ul li:last-child');
+
+		var changeCount = 0;
+
+		$select.on('change', function() {
+			changeCount++;
+		});
+
+		$elem.trigger('click');
+
+		setTimeout(function() {
+
+			equal(changeCount, 1, 'Clicking on an element should raise the counter');
+			
+			$elem.trigger('click');
+
+			setTimeout(function() {
+
+				equal(changeCount, 1, 'Clicking on the already selected element should not raise the counter');
+
+				done();
+
+			}, 150);
+
+		}, 150);	
+
 
 	});
 

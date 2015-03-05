@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("basic: instantiation", function() {
+	QUnit.test("basic: instantiation", function() {
 		var $select = $('select#basic').prettyselect();
 
 		equal($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');

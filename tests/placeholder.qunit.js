@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("Placeholder", function() {
+	QUnit.test("Placeholder", function() {
 
 		
 		var $select = $('select#basic').prettyselect();

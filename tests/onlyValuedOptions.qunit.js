@@ -4,7 +4,7 @@
 
 (function($) {
 
-	test("basic: instantiation", function() {
+	QUnit.test("basic: instantiation", function() {
 
 		var $select = $('select#third').prettyselect();
 		$wrap = $select.parents('.prettyselect-wrap');
