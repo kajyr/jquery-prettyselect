@@ -4,8 +4,9 @@
 
 (function($) {
 
-	asyncTest("Attributes", function() {
+	QUnit.test("Attributes", function( assert ) {
 
+		var done = assert.async();
 		
 		var $select = $('select#basic').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -25,7 +26,7 @@
 		
 			$select.prettyselect('destroy');
 
-			start();
+			done();
 		}, 500);
 
 	});
