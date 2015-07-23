@@ -110,7 +110,7 @@
 			@$wrap.removeClass(@options.disabledClass)
  
 	# Define the plugin
-	$.fn.extend prettyselect: (option, args...) ->
+	$.fn.prettyselect = (option, args...) ->
 		@each ->
 			$this = $(this)
 			data = $this.data('PrettySelect')
@@ -120,4 +120,4 @@
 			if typeof option == 'string'
 				data[option].apply(data, args)
  
-) jQuery
+) window.jQuery

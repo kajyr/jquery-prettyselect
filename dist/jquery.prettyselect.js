@@ -145,23 +145,21 @@
       return PrettySelect;
 
     })();
-    return $.fn.extend({
-      prettyselect: function() {
-        var args, option;
-        option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        return this.each(function() {
-          var $this, data;
-          $this = $(this);
-          data = $this.data('PrettySelect');
-          if (!data) {
-            $this.data('PrettySelect', (data = new PrettySelect(this, option)));
-          }
-          if (typeof option === 'string') {
-            return data[option].apply(data, args);
-          }
-        });
-      }
-    });
-  })(jQuery);
+    return $.fn.prettyselect = function() {
+      var args, option;
+      option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return this.each(function() {
+        var $this, data;
+        $this = $(this);
+        data = $this.data('PrettySelect');
+        if (!data) {
+          $this.data('PrettySelect', (data = new PrettySelect(this, option)));
+        }
+        if (typeof option === 'string') {
+          return data[option].apply(data, args);
+        }
+      });
+    };
+  })(window.jQuery);
 
 }).call(this);
