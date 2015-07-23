@@ -72,7 +72,8 @@
         this.$label = $("<div class=" + this.options.labelClass + "/>").html(($pl = this.$select.find('option[data-placeholder]')).length > 0 ? $pl.text() : this.$select.find('option:selected').text());
         $options = this.$select.find(this.options.optionsSelector);
         elements = this._.populate($options);
-        this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>").hide();
+        this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
+        this.closeDrop();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
             var oldVal, value;
@@ -96,13 +97,13 @@
         })(this));
         this.$label.on('click', (function(_this) {
           return function(e) {
-            if (_this.$drop.is(':visible') || _this.isDisabled()) {
+            if (_this.isDropOpen() || _this.isDisabled()) {
               return;
             }
             e.stopPropagation();
-            _this.$drop.show();
+            _this.showDrop();
             return $('html').one('click', function() {
-              return _this.$drop.hide();
+              return _this.closeDrop();
             });
           };
         })(this));
@@ -142,6 +143,18 @@
         return this.$wrap.removeClass(this.options.disabledClass);
       };
 
+      PrettySelect.prototype.closeDrop = function() {
+        return this.$drop.css('display', 'none');
+      };
+
+      PrettySelect.prototype.showDrop = function() {
+        return this.$drop.css('display', 'block');
+      };
+
+      PrettySelect.prototype.isDropOpen = function() {
+        return this.$drop.css('display') === 'block';
+      };
+
       return PrettySelect;
 
     })();
@@ -160,6 +173,6 @@
         }
       });
     };
-  })(window.jQuery);
+  })(window.jQuery || window.Zepto);
 
 }).call(this);

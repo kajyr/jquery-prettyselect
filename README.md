@@ -5,6 +5,8 @@ jquery-prettyselect
 
 Html replace to make select elements pretty.
 
+Also works with [zeptojs](http://zeptojs.com/)
+
 The select element is still present and hidden ( and works as the Model for the Html View), hence can be used to bind events or listen changes.
 
 ## Usage

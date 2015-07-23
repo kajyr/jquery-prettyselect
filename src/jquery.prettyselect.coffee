@@ -42,7 +42,8 @@
 			elements = @_.populate($options)
 
 			@$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
-				.hide()
+			
+			@closeDrop()
 
 			@$wrap = @$select.parents('.' + @options.wrapClass)
 				.attr('data-prettyselect-elements', $options.length)
@@ -65,13 +66,13 @@
 			)
 
 			@$label.on('click', (e) => 
-				return if @$drop.is(':visible') or @isDisabled()
+				return if @isDropOpen() or @isDisabled()
 				e.stopPropagation()
 
-				@$drop.show()
+				@showDrop()
 
 				$('html').one('click', () =>
-					@$drop.hide()
+					@closeDrop()
 				)
 			)
 
@@ -108,6 +109,16 @@
 		enable: () ->
 			@$select.removeAttr('disabled', 'disabled')
 			@$wrap.removeClass(@options.disabledClass)
+
+		closeDrop: () ->
+			@$drop.css('display', 'none')
+
+		showDrop: () ->
+			@$drop.css('display', 'block')
+
+		isDropOpen: () ->
+			@$drop.css('display') == 'block'
+
  
 	# Define the plugin
 	$.fn.prettyselect = (option, args...) ->
@@ -120,4 +131,4 @@
 			if typeof option == 'string'
 				data[option].apply(data, args)
  
-) window.jQuery
+) window.jQuery || window.Zepto
