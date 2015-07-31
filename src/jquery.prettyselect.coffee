@@ -13,7 +13,9 @@
 			populate: ($options) ->
 				return $options.map( () ->
 					val = escape $(this).attr('value')
-					"<li data-value='#{val}'>#{$(this).html()}</li>"
+					rawCls = $(this).attr('class')
+					cls = if typeof rawCls != 'undefined' then "class='#{escape rawCls}'" else ''
+					"<li data-value='#{val}' #{cls}>#{$(this).html()}</li>"
 				).toArray().join('')
 
 			optionsSelector:
@@ -86,7 +88,7 @@
 				@$drop.html @_.populate($options)
 			)
 
-			@observer.observe(@$select[0], { subtree: true, attributes: false, childList: true })
+			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class'], childList: true })
 
 		destroy: () ->
 			@observer.disconnect()

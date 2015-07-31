@@ -53,9 +53,11 @@
       PrettySelect.prototype._ = {
         populate: function($options) {
           return $options.map(function() {
-            var val;
+            var cls, rawCls, val;
             val = escape($(this).attr('value'));
-            return "<li data-value='" + val + "'>" + ($(this).html()) + "</li>";
+            rawCls = $(this).attr('class');
+            cls = typeof rawCls !== 'undefined' ? "class='" + (escape(rawCls)) + "'" : '';
+            return "<li data-value='" + val + "' " + cls + ">" + ($(this).html()) + "</li>";
           }).toArray().join('');
         },
         optionsSelector: {
@@ -117,7 +119,9 @@
         })(this));
         this.observer.observe(this.$select[0], {
           subtree: true,
-          attributes: false,
+          attributes: true,
+          attributeOldValue: false,
+          attributeFilter: ['class'],
           childList: true
         });
       }
