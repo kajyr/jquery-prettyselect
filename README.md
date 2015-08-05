@@ -69,8 +69,10 @@ $('select').prettyselect('enable');
 
 ## Updates
 
-### [1.4](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.4.1)
+### [1.4](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.4.2)
 + When there are classes on the option elements, those are copied to the li's. (And kept in sync)
++ Prettyselect label resets on selection lost
+
 
 ### [1.3](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.3.0)
 + Zeptojs is supported
