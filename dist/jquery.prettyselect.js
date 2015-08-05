@@ -60,6 +60,14 @@
             return "<li data-value='" + val + "' " + cls + ">" + ($(this).html()) + "</li>";
           }).toArray().join('');
         },
+        getLabel: function($select) {
+          var $pl;
+          if (($pl = $select.find('option[data-placeholder]')).length > 0) {
+            return $pl.text();
+          } else {
+            return $select.find('option:selected').text();
+          }
+        },
         optionsSelector: {
           onlyWithValue: 'option[value][value!=""]:not([data-placeholder])',
           withoutValue: 'option:not([data-placeholder])'
@@ -67,11 +75,11 @@
       };
 
       function PrettySelect(select, options) {
-        var $options, $pl, MutationObserver, elements;
+        var $options, MutationObserver, elements;
         this.options = $.extend({}, this.defaults, options);
         this.options.optionsSelector = this.options.onlyValuedOptions ? this._.optionsSelector.onlyWithValue : this._.optionsSelector.withoutValue;
         this.$select = $(select).hide().wrap("<div class=" + this.options.wrapClass + "/>");
-        this.$label = $("<div class=" + this.options.labelClass + "/>").html(($pl = this.$select.find('option[data-placeholder]')).length > 0 ? $pl.text() : this.$select.find('option:selected').text());
+        this.$label = $("<div class=" + this.options.labelClass + "/>").html(this._.getLabel(this.$select));
         $options = this.$select.find(this.options.optionsSelector);
         elements = this._.populate($options);
         this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
@@ -114,7 +122,10 @@
           return function(mutations, observer) {
             $options = _this.$select.find(_this.options.optionsSelector);
             _this.$wrap.attr('data-prettyselect-elements', $options.length);
-            return _this.$drop.html(_this._.populate($options));
+            _this.$drop.html(_this._.populate($options));
+            if (_this.$select.find('[selected]').length === 0) {
+              return _this.$label.html(_this._.getLabel(_this.$select));
+            }
           };
         })(this));
         this.observer.observe(this.$select[0], {

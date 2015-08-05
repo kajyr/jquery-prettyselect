@@ -4,7 +4,7 @@
 
 (function($) {
 
-	QUnit.test("Attributes", function( assert ) {
+	QUnit.test("Classes", function( assert ) {
 
 		var done = assert.async();
 

@@ -18,6 +18,12 @@
 					"<li data-value='#{val}' #{cls}>#{$(this).html()}</li>"
 				).toArray().join('')
 
+			getLabel: ($select) ->
+				if ($pl = $select.find('option[data-placeholder]')).length > 0
+					return $pl.text()
+				else
+					return $select.find('option:selected').text()
+
 			optionsSelector:
 				onlyWithValue: 'option[value][value!=""]:not([data-placeholder])'
 				withoutValue: 'option:not([data-placeholder])'
@@ -33,10 +39,7 @@
 				.wrap("<div class=#{@options.wrapClass}/>")
 
 			@$label = $("<div class=#{@options.labelClass}/>").html(
-				if ($pl = @$select.find('option[data-placeholder]')).length > 0
-					$pl.text()
-				else
-					@$select.find('option:selected').text()
+				@_.getLabel(@$select)
 			)
 
 			$options = @$select.find(@options.optionsSelector)
@@ -86,6 +89,10 @@
 				@$wrap.attr('data-prettyselect-elements', $options.length)
 
 				@$drop.html @_.populate($options)
+
+				if @$select.find('[selected]').length == 0
+					@$label.html(@_.getLabel(@$select))
+			
 			)
 
 			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class'], childList: true })
