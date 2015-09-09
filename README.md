@@ -15,7 +15,7 @@ $('select').prettyselect();
 
 The select element is still present and hidden ( and works as the Model for the Html View), hence can be used to bind events or listen changes.
 
-##Options
+## Options
 
 ### onlyValuedOptions
 
