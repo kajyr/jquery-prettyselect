@@ -25,9 +25,9 @@
 
 		// 
 
-		var label = $parent.find('.prettyselect-label').html();
+		var label = $parent.find('.prettyselect-label').val();
 
-		assert.equal(label, placeholderText, "La label della select deve essere uguale al placeholder");
+		assert.equal(label, placeholderText, "Prettyselect label should be the same as the placeholder");
 		
 	});
 

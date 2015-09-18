@@ -40,7 +40,8 @@
   var __slice = [].slice;
 
   (function($) {
-    var PrettySelect;
+    var PrettySelect, elemCounter;
+    elemCounter = 0;
     PrettySelect = (function() {
       PrettySelect.prototype.defaults = {
         wrapClass: 'prettyselect-wrap',
@@ -57,7 +58,7 @@
             val = escape($(this).attr('value'));
             rawCls = $(this).attr('class');
             cls = typeof rawCls !== 'undefined' ? "class='" + (escape(rawCls)) + "'" : '';
-            return "<li data-value='" + val + "' " + cls + ">" + ($(this).html()) + "</li>";
+            return "<li data-value='" + val + "' " + cls + " role='option'>" + ($(this).html()) + "</li>";
           }).toArray().join('');
         },
         getLabel: function($select) {
@@ -76,13 +77,15 @@
 
       function PrettySelect(select, options) {
         var $options, MutationObserver, elements;
-        this.options = $.extend({}, this.defaults, options);
+        this.options = $.extend({
+          dropid: "prettyselect-drop-" + (elemCounter++)
+        }, this.defaults, options);
         this.options.optionsSelector = this.options.onlyValuedOptions ? this._.optionsSelector.onlyWithValue : this._.optionsSelector.withoutValue;
-        this.$select = $(select).hide().wrap("<div class=" + this.options.wrapClass + "/>");
-        this.$label = $("<div class=" + this.options.labelClass + "/>").html(this._.getLabel(this.$select));
+        this.$select = $(select).hide().wrap("<div class=" + this.options.wrapClass + " />");
+        this.$label = $("<input class='" + this.options.labelClass + "' type='text' role='combobox' aria-owns='" + this.options.dropid + "'/>").val(this._.getLabel(this.$select));
         $options = this.$select.find(this.options.optionsSelector);
         elements = this._.populate($options);
-        this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
+        this.$drop = $("<ul class='" + this.options.dropClass + "' role='listbox' aria-expanded='false' id='" + this.options.dropid + "'>" + elements + "</ul>");
         this.closeDrop();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
@@ -102,7 +105,7 @@
           return function(e) {
             var val;
             val = _this.$select.val().replace("'", "\\'");
-            return _this.$label.html(_this.$select.find("option[value = '" + val + "']").html());
+            return _this.$label.val(_this.$select.find("option[value = '" + val + "']").html());
           };
         })(this));
         this.$label.on('click', (function(_this) {
@@ -124,7 +127,7 @@
             _this.$wrap.attr('data-prettyselect-elements', $options.length);
             _this.$drop.html(_this._.populate($options));
             if (_this.$select.find('[selected]').length === 0) {
-              return _this.$label.html(_this._.getLabel(_this.$select));
+              return _this.$label.val(_this._.getLabel(_this.$select));
             }
           };
         })(this));
@@ -159,11 +162,11 @@
       };
 
       PrettySelect.prototype.closeDrop = function() {
-        return this.$drop.css('display', 'none');
+        return this.$drop.css('display', 'none').attr('aria-expanded', 'false');
       };
 
       PrettySelect.prototype.showDrop = function() {
-        return this.$drop.css('display', 'block');
+        return this.$drop.css('display', 'block').attr('aria-expanded', 'true');
       };
 
       PrettySelect.prototype.isDropOpen = function() {

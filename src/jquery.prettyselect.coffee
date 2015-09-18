@@ -1,4 +1,6 @@
 (($) ->
+	elemCounter = 0
+
 	class PrettySelect
  
 		defaults:
@@ -15,7 +17,7 @@
 					val = escape $(this).attr('value')
 					rawCls = $(this).attr('class')
 					cls = if typeof rawCls != 'undefined' then "class='#{escape rawCls}'" else ''
-					"<li data-value='#{val}' #{cls}>#{$(this).html()}</li>"
+					"<li data-value='#{val}' #{cls} role='option'>#{$(this).html()}</li>"
 				).toArray().join('')
 
 			getLabel: ($select) ->
@@ -30,15 +32,17 @@
 
  		#public
 		constructor: (select, options) ->
-			@options = $.extend({}, @defaults, options)
+			@options = $.extend({
+				dropid: "prettyselect-drop-#{elemCounter++}"
+			}, @defaults, options)
 
 			@options.optionsSelector = if @options.onlyValuedOptions then @_.optionsSelector.onlyWithValue else @_.optionsSelector.withoutValue
 
 			@$select = $(select)
 				.hide()
-				.wrap("<div class=#{@options.wrapClass}/>")
+				.wrap("<div class=#{@options.wrapClass} />")
 
-			@$label = $("<div class=#{@options.labelClass}/>").html(
+			@$label = $("<input class='#{@options.labelClass}' type='text' role='combobox' aria-owns='#{@options.dropid}'/>").val(
 				@_.getLabel(@$select)
 			)
 
@@ -46,7 +50,7 @@
 
 			elements = @_.populate($options)
 
-			@$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
+			@$drop = $("<ul class='#{@options.dropClass}' role='listbox' aria-expanded='false' id='#{@options.dropid}'>#{elements}</ul>")
 			
 			@closeDrop()
 
@@ -67,7 +71,7 @@
 
 			@$select.on('change', (e) =>
 				val = @$select.val().replace("'", "\\'")
-				@$label.html( @$select.find("option[value = '#{val}']").html() )
+				@$label.val( @$select.find("option[value = '#{val}']").html() )
 			)
 
 			@$label.on('click', (e) => 
@@ -91,7 +95,7 @@
 				@$drop.html @_.populate($options)
 
 				if @$select.find('[selected]').length == 0
-					@$label.html(@_.getLabel(@$select))
+					@$label.val(@_.getLabel(@$select))
 			
 			)
 
@@ -121,9 +125,11 @@
 
 		closeDrop: () ->
 			@$drop.css('display', 'none')
+				.attr('aria-expanded', 'false')
 
 		showDrop: () ->
 			@$drop.css('display', 'block')
+				.attr('aria-expanded', 'true')
 
 		isDropOpen: () ->
 			@$drop.css('display') == 'block'

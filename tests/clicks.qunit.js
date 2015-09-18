@@ -26,7 +26,7 @@
 
 		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
 
-		assert.equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
+		assert.equal($label.val(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
 		assert.equal($select2.val(), value2, "The secondary select value should not be changed");
 
