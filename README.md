@@ -78,7 +78,7 @@ $('select').prettyselect('enable');
 ### [1.3](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.3.0)
 + Zeptojs is supported
 
-### [1.2](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.2.4)
+### [1.2](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.2.9)
 + Added the disabled method
 + size optimizations
 + triggered native change event to better integrate with other frameworks.
