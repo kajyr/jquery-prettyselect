@@ -69,9 +69,10 @@ $('select').prettyselect('enable');
 
 ## Updates
 
-### [1.4](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.4.2)
+### [1.4](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.4.3)
 + When there are classes on the option elements, those are copied to the li's. (And kept in sync)
 + Prettyselect label resets on selection lost
++ Fix: update the selected value when the [selected] attribute is manually written on a option element
 
 
 ### [1.3](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.3.0)
