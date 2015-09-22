@@ -92,10 +92,11 @@
 
 				if @$select.find('[selected]').length == 0
 					@$label.html(@_.getLabel(@$select))
-			
+				else
+					@$label.html @$select.find('option:selected').text()
 			)
 
-			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class'], childList: true })
+			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class', 'selected'], childList: true })
 
 		destroy: () ->
 			@observer.disconnect()

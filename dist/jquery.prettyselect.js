@@ -125,6 +125,8 @@
             _this.$drop.html(_this._.populate($options));
             if (_this.$select.find('[selected]').length === 0) {
               return _this.$label.html(_this._.getLabel(_this.$select));
+            } else {
+              return _this.$label.html(_this.$select.find('option:selected').text());
             }
           };
         })(this));
@@ -132,7 +134,7 @@
           subtree: true,
           attributes: true,
           attributeOldValue: false,
-          attributeFilter: ['class'],
+          attributeFilter: ['class', 'selected'],
           childList: true
         });
       }
