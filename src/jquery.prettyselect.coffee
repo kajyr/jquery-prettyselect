@@ -106,7 +106,7 @@
 
 			@$select
 				.show()
-				.unwrap(@options.wrapClass)
+				.unwrap()
 				.removeData 'PrettySelect'
 
 		isDisabled: () ->

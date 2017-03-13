@@ -143,7 +143,7 @@
         this.observer.disconnect();
         this.$label.detach();
         this.$drop.detach();
-        return this.$select.show().unwrap(this.options.wrapClass).removeData('PrettySelect');
+        return this.$select.show().unwrap().removeData('PrettySelect');
       };
 
       PrettySelect.prototype.isDisabled = function() {
