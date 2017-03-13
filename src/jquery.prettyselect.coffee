@@ -6,6 +6,7 @@
 			labelClass: 'prettyselect-label'
 			dropClass: 'prettyselect-drop'
 			disabledClass: 'prettyselect-disabled'
+			wrapOpenClass: 'prettyselect-open'
 			onlyValuedOptions: false
 
 		#privates
@@ -47,8 +48,6 @@
 			elements = @_.populate($options)
 
 			@$drop = $("<ul class=#{@options.dropClass}>#{elements}</ul>")
-			
-			@closeDrop()
 
 			@$wrap = @$select.parents('.' + @options.wrapClass)
 				.attr('data-prettyselect-elements', $options.length)
@@ -64,6 +63,8 @@
 						.val(value)
 						.trigger('change')
 				)
+
+			@closeDrop()
 
 			@$select.on('change', (e) =>
 				val = @$select.val().replace("'", "\\'")
@@ -121,9 +122,11 @@
 			@$wrap.removeClass(@options.disabledClass)
 
 		closeDrop: () ->
+			@$wrap.removeClass(@options.wrapOpenClass)
 			@$drop.css('display', 'none')
 
 		showDrop: () ->
+			@$wrap.addClass(@options.wrapOpenClass)
 			@$drop.css('display', 'block')
 
 		isDropOpen: () ->

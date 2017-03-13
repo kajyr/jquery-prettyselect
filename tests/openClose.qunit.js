@@ -24,6 +24,8 @@
 
 		assert.ok($drop.is(':visible'), 'After a click the drop element is visible');
 		assert.ok($drop2.is(':hidden'), 'But the second select drop is still hidden');
+		assert.ok($wrap.hasClass('prettyselect-open'), 'The open wrap has the correct class');
+		assert.ok(!$wrap2.hasClass('prettyselect-open'), 'The close wrap has not the open class');
 
 		$('body').trigger('click');
 

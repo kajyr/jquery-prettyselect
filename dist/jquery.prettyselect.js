@@ -37,7 +37,7 @@
 }).call(this);
 
 (function() {
-  var __slice = [].slice;
+  var slice = [].slice;
 
   (function($) {
     var PrettySelect;
@@ -47,6 +47,7 @@
         labelClass: 'prettyselect-label',
         dropClass: 'prettyselect-drop',
         disabledClass: 'prettyselect-disabled',
+        wrapOpenClass: 'prettyselect-open',
         onlyValuedOptions: false
       };
 
@@ -83,7 +84,6 @@
         $options = this.$select.find(this.options.optionsSelector);
         elements = this._.populate($options);
         this.$drop = $("<ul class=" + this.options.dropClass + ">" + elements + "</ul>");
-        this.closeDrop();
         this.$wrap = this.$select.parents('.' + this.options.wrapClass).attr('data-prettyselect-elements', $options.length).append(this.$label).append(this.$drop).on('click', 'li', (function(_this) {
           return function(e) {
             var oldVal, value;
@@ -98,6 +98,7 @@
             return _this.$select.val(value).trigger('change');
           };
         })(this));
+        this.closeDrop();
         this.$select.on('change', (function(_this) {
           return function(e) {
             var val;
@@ -161,10 +162,12 @@
       };
 
       PrettySelect.prototype.closeDrop = function() {
+        this.$wrap.removeClass(this.options.wrapOpenClass);
         return this.$drop.css('display', 'none');
       };
 
       PrettySelect.prototype.showDrop = function() {
+        this.$wrap.addClass(this.options.wrapOpenClass);
         return this.$drop.css('display', 'block');
       };
 
@@ -177,7 +180,7 @@
     })();
     return $.fn.prettyselect = function() {
       var args, option;
-      option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      option = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       return this.each(function() {
         var $this, data;
         $this = $(this);
