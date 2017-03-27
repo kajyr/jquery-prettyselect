@@ -3,6 +3,7 @@
   "title": "jquery-prettyselect",
   "description": "Makes select elements pretty.",
   "version": "1.5.0",
+  "main": "dist/jquery.prettyselect.js",
   "author": {
     "name": "Carlo 'kj'",
     "email": "carlo.panzi@gmail.com",
