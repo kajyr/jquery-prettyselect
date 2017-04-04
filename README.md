@@ -71,6 +71,7 @@ $('select').prettyselect('enable');
 
 ### [1.5](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.5)
 + Added a class to the wrapper to distinguish between drop open and drop closed state
++ Exported prettyselect also a AMD module, if in an AMD ecosystem.
 
 ### [1.4](https://github.com/kajyr/jquery-prettyselect/releases/tag/v1.4.3)
 + When there are classes on the option elements, those are copied to the li's. (And kept in sync)
