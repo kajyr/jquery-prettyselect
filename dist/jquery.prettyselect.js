@@ -37,9 +37,10 @@
 }).call(this);
 
 (function() {
-  var slice = [].slice;
+  var factory,
+    slice = [].slice;
 
-  (function($) {
+  factory = function($) {
     var PrettySelect;
     PrettySelect = (function() {
       PrettySelect.prototype.defaults = {
@@ -193,6 +194,12 @@
         }
       });
     };
-  })(window.jQuery || window.Zepto);
+  };
+
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else {
+    factory(window.jQuery || window.Zepto);
+  }
 
 }).call(this);
