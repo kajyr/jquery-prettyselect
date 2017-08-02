@@ -97,7 +97,7 @@ factory = ($) ->
 					@$label.html @$select.find('option:selected').text()
 			)
 
-			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class', 'selected'], childList: true })
+			@observer.observe(@$select[0], { subtree: true, attributes: true, attributeOldValue: false, attributeFilter: ['class', 'selected', 'value'], childList: true })
 
 		destroy: () ->
 			@observer.disconnect()

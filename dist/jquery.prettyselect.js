@@ -136,7 +136,7 @@
           subtree: true,
           attributes: true,
           attributeOldValue: false,
-          attributeFilter: ['class', 'selected'],
+          attributeFilter: ['class', 'selected', 'value'],
           childList: true
         });
       }
