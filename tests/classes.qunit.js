@@ -1,12 +1,11 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("Classes", function( assert ) {
+require('../dist/jquery.prettyselect.js')
 
-		var done = assert.async();
+	test.cb("Classes", function( t ) {
 
 		var $select = $('select#basic').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -16,14 +15,12 @@
 
 		setTimeout(function() {
 			
-			assert.equal($wrap.find('li.testClass').length, 1, 'Ci deve essere un elemento della drop con la classe impostata giusta');
+			t.is($wrap.find('li.testClass').length, 1, 'Ci deve essere un elemento della drop con la classe impostata giusta');
 
 			$select.prettyselect('destroy');
 
-			done();
+			t.end();
 		}, 500);
 
 	});
 
-
-}(jQuery));

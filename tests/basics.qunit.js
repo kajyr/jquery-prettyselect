@@ -1,30 +1,29 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("basic: instantiation", function( assert ) {
-		var $select = $('select#basic').prettyselect();
+require('../dist/jquery.prettyselect.js')
 
-		assert.equal($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');
+test("basic: instantiation", function( t ) {
+	var $select = $('select#basic').prettyselect();
 
-		$select.prettyselect();
+	t.is($select.parents('.prettyselect-wrap').length, 1, 'There is a wrap element');
 
-		assert.equal($('.prettyselect-wrap').length, 1, 'If called another time, it does nothing');
+	$select.prettyselect();
 
-		$select.prettyselect('destroy');
+	t.is($('.prettyselect-wrap').length, 1, 'If called another time, it does nothing');
 
-		assert.equal($select.parents('.prettyselect-wrap').length, 0, 'It can be destroyed');
+	$select.prettyselect('destroy');
 
-		assert.equal($select.data('PrettySelect'), undefined, 'There should be no left data elements')
+	t.is($select.parents('.prettyselect-wrap').length, 0, 'It can be destroyed');
 
-		$select.prettyselect();
+	t.is($select.data('PrettySelect'), undefined, 'There should be no left data elements')
 
-		assert.equal($select.parents('.prettyselect-wrap').length, 1, 'Can be reinstantiated');
+	$select.prettyselect();
 
-		$select.prettyselect('destroy');
-	});
+	t.is($select.parents('.prettyselect-wrap').length, 1, 'Can be reinstantiated');
 
+	$select.prettyselect('destroy');
+});
 
-}(jQuery));

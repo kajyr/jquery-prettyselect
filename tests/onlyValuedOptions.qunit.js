@@ -1,27 +1,25 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("basic: instantiation", function( assert ) {
+require('../dist/jquery.prettyselect.js')
 
-		var $select = $('select#third').prettyselect();
-		$wrap = $select.parents('.prettyselect-wrap');
+test("basic: instantiation", function( t ) {
 
-		assert.equal($wrap.attr('data-prettyselect-elements'), 5, 'Senza opzione onlyValuedOptions mi aspetto 5 elementi');
-		
-		$select.prettyselect('destroy');
+	let $select = $('select#third').prettyselect();
+	let $wrap = $select.parents('.prettyselect-wrap');
 
-		$select = $('select#third').prettyselect({
-			onlyValuedOptions: true
-		});
-		$wrap = $select.parents('.prettyselect-wrap');
-		assert.equal($wrap.attr('data-prettyselect-elements'), 4, 'Con l\'opzione onlyValuedOptions mi aspetto 4 elementi');
+	t.is($wrap.attr('data-prettyselect-elements'), '5', 'Senza opzione onlyValuedOptions mi aspetto 5 elementi');
+	
+	$select.prettyselect('destroy');
 
-
-
+	$select = $('select#third').prettyselect({
+		onlyValuedOptions: true
 	});
+	$wrap = $select.parents('.prettyselect-wrap');
+	t.is($wrap.attr('data-prettyselect-elements'), '4', 'Con l\'opzione onlyValuedOptions mi aspetto 4 elementi');
 
 
-}(jQuery));
+
+});

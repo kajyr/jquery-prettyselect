@@ -1,10 +1,17 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("interface: open and close", function(assert) {
+require('../dist/jquery.prettyselect.js')
+
+test.before(t => {
+	
+});
+
+
+
+test("interface: open and close", (t) => {
 
 		
 		var $selectOne = $('select#basic').prettyselect();
@@ -13,10 +20,5 @@
 		var $parentOne = $selectOne.parents('.prettyselect-wrap');
 		var $parentTwo = $selectTwo.parents('.prettyselect-wrap');
 
-		assert.notStrictEqual($parentOne[0], $parentTwo[0], 'Each select has own wrap');
-
-		
-	});
-
-
-}(jQuery));
+		t.not($parentOne[0], $parentTwo[0], 'Each select has own wrap');
+})

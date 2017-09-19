@@ -1,38 +1,35 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("Attributes", function( assert ) {
+require('../dist/jquery.prettyselect.js')
 
-		var done = assert.async();
+	test.cb("Attributes", function( t ) {
 
 		var $select = $('select#basic').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
-		assert.equal($wrap.attr('data-prettyselect-elements'), 2, 'L\'attributo data-prettyselect-elements deve essere corretto');
+		t.is($wrap.attr('data-prettyselect-elements'), '2', 'L\'attributo data-prettyselect-elements deve essere corretto');
 
 		$select = $('select#secondary').prettyselect();
 		$wrap = $select.parents('.prettyselect-wrap');
-		assert.equal($wrap.attr('data-prettyselect-elements'), 5, 'L\'attributo data-prettyselect-elements deve essere corretto');
+		t.is($wrap.attr('data-prettyselect-elements'), '5', 'L\'attributo data-prettyselect-elements deve essere corretto');
 		
 		$select.append('<option value="z">z</option>');
 
 		setTimeout(function() {
 			
-			assert.equal($wrap.attr('data-prettyselect-elements'), 6, 'L\'attributo data-prettyselect-elements deve aggiornarsi');
+			t.is($wrap.attr('data-prettyselect-elements'), '6', 'L\'attributo data-prettyselect-elements deve aggiornarsi');
 		
 			$select.prettyselect('destroy');
 
-			done();
+			t.end();
 		}, 500);
 
 	});
 
 
-	QUnit.test("Attributes", function( assert ) {
-
-		var done = assert.async();
+	test.cb("Attributes", function( t ) {
 
 		var $select = $('select#basic').prettyselect();
 
@@ -45,17 +42,13 @@
 			
 			var value = $select.val();
 
-			assert.equal(value, optionValue, 'Quando forzo l\'attributo selected il val() deve aggiornarsi');
+			t.is(value, optionValue, 'Quando forzo l\'attributo selected il val() deve aggiornarsi');
 
 			$select.prettyselect('destroy');
 
-			done();
+			t.end();
 		}, 500);
 
 	});
 
 
-
-
-
-}(jQuery));

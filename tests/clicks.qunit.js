@@ -1,10 +1,18 @@
-/*global QUnit:false, module:false, test:false, asyncTest:false, expect:false*/
-/*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
-/*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
+import test from 'ava'
+import $ from 'jquery'
 
-(function($) {
+window.jQuery = $
 
-	QUnit.test("interface: clicks", function( assert ) {
+require('../dist/jquery.prettyselect.js')
+
+test.after.always('Cleanup', t => {
+	$('select#basic').prettyselect('destroy');
+	$('select#secondary').prettyselect('destroy');
+	$('select#third').prettyselect('destroy');
+	$('select#nasty').prettyselect('destroy');
+});
+
+	test("interface: clicks", function( t ) {
 
 		var $select = $('select#basic').prettyselect();
 		var $select2 = $('select#secondary').prettyselect();
@@ -24,17 +32,17 @@
 		
 		$elem.trigger('click');
 
-		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
+		t.is($select.val(), value, 'Clicking on an interface element changes select value');
 
-		assert.equal($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
+		t.is($label.text(), $elem.text(), "If I select an element the interface respondes by showing the correct element as label");
 
-		assert.equal($select2.val(), value2, "The secondary select value should not be changed");
+		t.is($select2.val(), value2, "The secondary select value should not be changed");
 
 		$select.prettyselect('destroy');
 		$select2.prettyselect('destroy');
 	});
 
-	QUnit.test("interface: clicks on nasty values", function( assert ) {
+	test("interface: clicks on nasty values", function( t ) {
 
 		var $select = $('select#nasty').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -44,11 +52,11 @@
 
 		$elem.trigger('click');
 
-		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
+		t.is($select.val(), value, 'Clicking on an interface element changes select value');
 
 	});
 
-	QUnit.test("interface: clicks on values with single quotes", function( assert ) {
+	test("interface: clicks on values with single quotes", function( t ) {
 
 		var $select = $('select#third').prettyselect();
 		var $wrap = $select.parents('.prettyselect-wrap');
@@ -58,17 +66,21 @@
 
 		$elem.trigger('click');
 
-		assert.equal($select.val(), value, 'Clicking on an interface element changes select value');
+		t.is($select.val(), value, 'Clicking on an interface element changes select value');
 
 	});
 
-	QUnit.test("clicks on disabled prettyselect", function(assert ) {
+	test("clicks on disabled prettyselect", function(t ) {
 
 		var $select = $('select#basic').prettyselect();
+		var $wrap = $select.parents('.prettyselect-wrap');
+
+		// Seems that someone is not cleaning up properly
+		$wrap.find('ul li:first-child').trigger('click');
+
 
 		$select.prettyselect('disable');
 
-		var $wrap = $select.parents('.prettyselect-wrap');
 		var $elem = $wrap.find('ul li:last-child');
 
 		var oldValue = $select.val();
@@ -76,49 +88,52 @@
 
 		$elem.trigger('click');
 
-		assert.notEqual($select.val(), elemntValue, 'Clicking on an disabled interface element should not change selected value');
-		assert.equal($select.val(), oldValue, 'Clicking on an disabled interface element should leave the old value intact');
-		assert.ok($wrap.hasClass('prettyselect-disabled'), 'The wrap element should have the disabled class');
+		var newValue = $select.val();
+
+		t.not(newValue, elemntValue, 'Clicking on an disabled interface element should not change selected value');
+		t.is(newValue, oldValue, 'Clicking on an disabled interface element should leave the old value intact');
+		t.true($wrap.hasClass('prettyselect-disabled'), 'The wrap element should have the disabled class');
 
 		$select.prettyselect('enable');
 
 		$elem.trigger('click');
 
-		assert.equal($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
-		assert.notEqual($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
-		assert.ok(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
+		t.is($select.val(), elemntValue, 'Clicking on an re-enabled interface element should change selected value');
+		t.not($select.val(), oldValue, 'Clicking on an re-enabled interface element should not leave the old value intact');
+		t.true(!$wrap.hasClass('prettyselect-disabled'), 'The wrap element should not have the disabled class');
 
 	});
 
 
-	QUnit.test("multiple clicks on the same element", function( assert ) {
-
-		var done = assert.async();
+	test.cb("multiple clicks on the same element", function( t ) {
 
 		var $select = $('select#basic').prettyselect();
 
 		var $wrap = $select.parents('.prettyselect-wrap');
+		// Seems that someone is not cleaning up properly
+		$wrap.find('ul li:first-child').trigger('click');
+		
 		var $elem = $wrap.find('ul li:last-child');
 
 		var changeCount = 0;
 
-		$select.on('change', function() {
-			changeCount++;
+		$select.on('change', () => {
+			changeCount = changeCount + 1;
 		});
 
 		$elem.trigger('click');
 
-		setTimeout(function() {
+		setTimeout(() => {
 
-			assert.equal(changeCount, 1, 'Clicking on an element should raise the counter');
+			t.is(changeCount, 1, 'Clicking on an element should raise the counter');
 			
 			$elem.trigger('click');
 
-			setTimeout(function() {
+			setTimeout(() => {
 
-				assert.equal(changeCount, 1, 'Clicking on the already selected element should not raise the counter');
+				t.is(changeCount, 1, 'Clicking on the already selected element should not raise the counter');
 
-				done();
+				t.end();
 
 			}, 150);
 
@@ -126,5 +141,3 @@
 
 
 	});
-
-}(jQuery));
