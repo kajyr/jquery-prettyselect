@@ -5,29 +5,29 @@ window.jQuery = $
 
 require('../dist/jquery.prettyselect.js')
 
-	test("Placeholder", function( t ) {
+	test('Placeholder', function( t ) {
 
 		
-		var $select = $('select#basic').prettyselect();
+		let $select = $('select#basic').prettyselect()
 
 
-		var $placeholder = $select.find('option[data-placeholder]');
+		let $placeholder = $select.find('option[data-placeholder]')
 
-		var placeholderText = $placeholder.html();
+		let placeholderText = $placeholder.html()
 
-		var $parent = $select.parents('.prettyselect-wrap');
+		let $parent = $select.parents('.prettyselect-wrap')
 
-		var $li = $parent.find('ul li').filter(function() {
-			return $(this).html() == placeholderText;
-		});
+		let $li = $parent.find('ul li').filter(function() {
+			return $(this).html() === placeholderText
+		})
 
-		t.is($li.length, 0, "There should be no elements with the same text as the placeholder");
+		t.is($li.length, 0, 'There should be no elements with the same text as the placeholder')
 
 
 		// 
 
-		var label = $parent.find('.prettyselect-label').html();
+		let label = $parent.find('.prettyselect-label').html()
 
-		t.is(label, placeholderText, "La label della select deve essere uguale al placeholder");
+		t.is(label, placeholderText, 'La label della select deve essere uguale al placeholder')
 		
-	});
+	})

@@ -1,4 +1,4 @@
-require('browser-env')(['window', 'document', 'navigator']);
+require('browser-env')(['window', 'document', 'navigator'])
 
 document.body.innerHTML = `
     <select id="basic">
@@ -36,4 +36,4 @@ document.body.innerHTML = `
         <option value="{&quot;id&quot;: &quot;25&quot;, &quot;text&quot;:&quot;黄冈市&quot;}">黄冈市</option>
         <option value="{&quot;id&quot;: &quot;26&quot;, &quot;text&quot;:&quot;黄石市&quot;}">黄石市</option>
     </select>
-    `;
+    `

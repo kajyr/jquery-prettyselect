@@ -1,11 +1,7 @@
 {
 	"parserOptions": {
 		"ecmaVersion": 6,
-		"sourceType": "module",
-		"ecmaFeatures": {
-			"jsx": true,
-			"experimentalObjectRestSpread": true
-		}
+		"sourceType": "module"
 	},
 	"rules": {
 		"eqeqeq": 2,
@@ -16,16 +12,8 @@
 		"no-unused-vars": [1, { "argsIgnorePattern": "^_$" }],
 		"quote-props": [1, "consistent-as-needed"],
 		"quotes": [1, "single"],
-		"react/prop-types": [0, { "ignore": ["children", "dispatch"] }],
 		"semi": [1, "never"]
 	},
-	"extends": ["plugin:react/recommended"],
-	"globals": {
-		"React": true
-	},
-	"plugins": [
-		"react"
-	],
 	"env": {
 		"es6": true
 	}

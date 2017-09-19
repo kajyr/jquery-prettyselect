@@ -5,20 +5,14 @@ window.jQuery = $
 
 require('../dist/jquery.prettyselect.js')
 
-test.before(t => {
-	
-});
-
-
-
-test("interface: open and close", (t) => {
+test('interface: open and close', (t) => {
 
 		
-		var $selectOne = $('select#basic').prettyselect();
-		var $selectTwo = $('select#secondary').prettyselect();
+		let $selectOne = $('select#basic').prettyselect()
+		let $selectTwo = $('select#secondary').prettyselect()
 
-		var $parentOne = $selectOne.parents('.prettyselect-wrap');
-		var $parentTwo = $selectTwo.parents('.prettyselect-wrap');
+		let $parentOne = $selectOne.parents('.prettyselect-wrap')
+		let $parentTwo = $selectTwo.parents('.prettyselect-wrap')
 
-		t.not($parentOne[0], $parentTwo[0], 'Each select has own wrap');
+		t.not($parentOne[0], $parentTwo[0], 'Each select has own wrap')
 })
