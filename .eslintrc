@@ -1,0 +1,20 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"rules": {
+		"eqeqeq": 2,
+		"no-extra-semi": 2,
+		"no-irregular-whitespace": 2,
+		"no-mixed-spaces-and-tabs": 1,
+		"no-var": 2,
+		"no-unused-vars": [1, { "argsIgnorePattern": "^_$" }],
+		"quote-props": [1, "consistent-as-needed"],
+		"quotes": [1, "single"],
+		"semi": [1, "never"]
+	},
+	"env": {
+		"es6": true
+	}
+}

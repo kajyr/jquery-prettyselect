@@ -23,9 +23,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		qunit: {
-			all: ['tests/tests.html']
-		},
 		copy: {
 			main: {
 				src: 'package.json',
@@ -41,16 +38,14 @@ module.exports = function(grunt) {
 				},
 			},
 		}
-	});
+	})
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
-	grunt.loadNpmTasks('grunt-contrib-coffee');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-uglify')
+	grunt.loadNpmTasks('grunt-contrib-coffee')
+	grunt.loadNpmTasks('grunt-contrib-watch')
+	grunt.loadNpmTasks('grunt-contrib-copy')
 
 	// Default task(s).
-	grunt.registerTask('default', ['coffee', 'uglify']);
-	grunt.registerTask('test', ['coffee', 'uglify', 'qunit']);
+	grunt.registerTask('default', ['coffee', 'uglify'])
 
-};
+}
